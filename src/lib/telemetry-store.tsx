@@ -525,18 +525,74 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
       isStreaming: true
     }])
 
-    // Simulate SRE thinking time
-    await new Promise(resolve => setTimeout(resolve, 800))
+    let responseText = ""
+    try {
+      const activeIncident = incidentsRef.current.find(i => i.status !== "resolved")
+      const chatContext = {
+        activeIncident: activeIncident ? {
+          id: activeIncident.id,
+          title: activeIncident.title,
+          service: activeIncident.service,
+          affectedRoute: activeIncident.affectedRoute,
+          severity: activeIncident.severity,
+          rootCause: activeIncident.rootCause || "Under analysis",
+          recommendedFix: activeIncident.recommendedFix || "Investigating logs",
+        } : null,
+        activeScenario: activeScenarioRef.current,
+        recentLogsCount: logsRef.current.length,
+        recentAnomalies: logsRef.current.filter(l => l.statusCode >= 400 || l.error).slice(-5).map(l => ({
+          timestamp: l.timestamp,
+          service: l.service,
+          path: l.path,
+          latencyMs: l.latencyMs,
+          statusCode: l.statusCode,
+          error: l.error
+        })),
+        metrics: {
+          avgLatencyMs: metrics.avgLatencyMs,
+          errorRate: metrics.errorRate,
+          systemHealth: metrics.systemHealth
+        }
+      }
 
-    // Match deterministic mock response first for stable presentation runs
-    const responseText = getContextualSREAnswer(content, activeScenarioRef.current)
+      // We send the current message list + the new message to get complete chat history
+      // Keep it up to the last 10 messages to avoid large payloads
+      const historyToSend = [...chatMessages, userMsg].slice(-10).map(m => ({
+        role: m.role,
+        content: m.content
+      }))
+
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: historyToSend,
+          context: chatContext
+        })
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        if (data && data.content) {
+          responseText = data.content
+        }
+      }
+    } catch (error) {
+      console.warn("[TelemetryStore Chat Error] API failed, using fallback:", error)
+    }
+
+    // Fallback if API returned empty, failed, or was not configured
+    if (!responseText) {
+      await new Promise(resolve => setTimeout(resolve, 600))
+      responseText = getContextualSREAnswer(content, activeScenarioRef.current)
+    }
 
     setChatMessages(prev => prev.map(m => 
       m.id === asstMsgId 
         ? { ...m, content: responseText, isStreaming: false }
         : m
     ))
-  }, [aiConfidenceScore])
+  }, [chatMessages, metrics, getContextualSREAnswer])
 
   // ── Guided Demo Scenarios ─────────────────────────────────────────────
   const triggerDemoScenario = useCallback((scenario: DemoScenarioKey) => {

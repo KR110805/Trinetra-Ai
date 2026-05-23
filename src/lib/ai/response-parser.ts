@@ -5,6 +5,7 @@
 
 import type { AIAnalysisResult } from "./types"
 import type { Severity } from "../types"
+import { safeJsonParse } from "./safe-json-parser"
 
 /**
  * Parse the raw OpenAI response string into a validated AIAnalysisResult.
@@ -15,50 +16,41 @@ export function parseAIResponse(
   incidentId: string,
   fallbackSeverity: Severity
 ): AIAnalysisResult {
-  // Try to extract JSON from the response (handles ```json blocks)
-  let jsonStr = raw.trim()
-  const jsonMatch = jsonStr.match(/```(?:json)?\s*([\s\S]*?)```/)
-  if (jsonMatch) {
-    jsonStr = jsonMatch[1].trim()
-  }
-  // Also handle case where response starts with { directly
-  const braceStart = jsonStr.indexOf("{")
-  const braceEnd = jsonStr.lastIndexOf("}")
-  if (braceStart !== -1 && braceEnd !== -1) {
-    jsonStr = jsonStr.slice(braceStart, braceEnd + 1)
+  const parsed = safeJsonParse(raw)
+
+  if (parsed) {
+    try {
+      return {
+        incidentId,
+        rootCause: ensureString(parsed.rootCause, "Unable to determine root cause from available telemetry."),
+        confidence: ensureNumber(parsed.confidence, 70, 0, 100),
+        impactAnalysis: ensureString(parsed.impactAnalysis, "Impact analysis unavailable."),
+        affectedSystems: ensureStringArray(parsed.affectedSystems),
+        recommendedFixes: ensureStringArray(parsed.recommendedFixes),
+        recoverySteps: ensureStringArray(parsed.recoverySteps),
+        summary: ensureString(parsed.summary, "Incident under AI analysis."),
+        severity: fallbackSeverity,
+        estimatedRecoveryTime: ensureString(parsed.estimatedRecoveryTime, "Unknown"),
+        generatedAt: new Date(),
+      }
+    } catch (e) {
+      console.error("[parseAIResponse validation error]", e)
+    }
   }
 
-  try {
-    const parsed = JSON.parse(jsonStr)
-
-    return {
-      incidentId,
-      rootCause: ensureString(parsed.rootCause, "Unable to determine root cause from available telemetry."),
-      confidence: ensureNumber(parsed.confidence, 70, 0, 100),
-      impactAnalysis: ensureString(parsed.impactAnalysis, "Impact analysis unavailable."),
-      affectedSystems: ensureStringArray(parsed.affectedSystems),
-      recommendedFixes: ensureStringArray(parsed.recommendedFixes),
-      recoverySteps: ensureStringArray(parsed.recoverySteps),
-      summary: ensureString(parsed.summary, "Incident under AI analysis."),
-      severity: fallbackSeverity,
-      estimatedRecoveryTime: ensureString(parsed.estimatedRecoveryTime, "Unknown"),
-      generatedAt: new Date(),
-    }
-  } catch {
-    // JSON parsing failed — return a best-effort result
-    return {
-      incidentId,
-      rootCause: raw.slice(0, 300) || "AI analysis response could not be parsed.",
-      confidence: 50,
-      impactAnalysis: "Partial analysis — response format was unexpected.",
-      affectedSystems: [],
-      recommendedFixes: ["Retry analysis", "Check API configuration"],
-      recoverySteps: ["Monitor telemetry for changes"],
-      summary: "AI analysis produced a non-standard response.",
-      severity: fallbackSeverity,
-      estimatedRecoveryTime: "Unknown",
-      generatedAt: new Date(),
-    }
+  // JSON parsing failed — return a best-effort result
+  return {
+    incidentId,
+    rootCause: raw.slice(0, 300) || "AI analysis response could not be parsed.",
+    confidence: 50,
+    impactAnalysis: "Partial analysis — response format was unexpected.",
+    affectedSystems: [],
+    recommendedFixes: ["Retry analysis", "Check API configuration"],
+    recoverySteps: ["Monitor telemetry for changes"],
+    summary: "AI analysis produced a non-standard response.",
+    severity: fallbackSeverity,
+    estimatedRecoveryTime: "Unknown",
+    generatedAt: new Date(),
   }
 }
 

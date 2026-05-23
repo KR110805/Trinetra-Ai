@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { safeJsonParse } from '../../../lib/ai/safe-json-parser';
 
 export async function POST(request: Request) {
   const startTime = Date.now();
@@ -45,7 +46,11 @@ export async function POST(request: Request) {
     const duration = Date.now() - startTime;
     console.log(`[Gemini /api/analyze] Successfully analyzed in ${duration}ms.`);
 
-    return NextResponse.json({ content: responseText });
+    // Clean and validate response text with safeJsonParse
+    const parsed = safeJsonParse(responseText);
+    const cleanedText = parsed ? JSON.stringify(parsed) : responseText;
+
+    return NextResponse.json({ content: cleanedText });
 
   } catch (error: any) {
     console.error('[Gemini /api/analyze Error]:', error);
