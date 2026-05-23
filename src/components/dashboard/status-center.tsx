@@ -59,16 +59,16 @@ export function ServiceMeshStatus() {
       case "degraded":
         return "bg-amber-500"
       default:
-        return "bg-zinc-500" // healthy is simple zinc, muted
+        return "bg-zinc-650"
     }
   }
 
   return (
-    <Card className="border border-white/5 bg-[#09090B] rounded-lg">
+    <Card className="border border-white/[0.04] bg-[#09090B] shadow-[0_1px_3px_rgba(0,0,0,0.6)] rounded-lg">
       <CardContent className="p-5 flex flex-col justify-between h-full">
         <div>
-          <div className="flex items-center gap-1.5 mb-3.5">
-            <Activity className="w-3.5 h-3.5 text-zinc-400" />
+          <div className="flex items-center gap-1.5 mb-4 pb-2 border-b border-white/[0.04]">
+            <Activity className="w-3.5 h-3.5 text-zinc-500" />
             <h3 className="font-mono text-[10px] font-semibold tracking-wider text-zinc-400 uppercase">
               Service Mesh Status
             </h3>
@@ -79,16 +79,16 @@ export function ServiceMeshStatus() {
               return (
                 <div
                   key={svc.tag}
-                  className="flex flex-col p-2.5 rounded border border-white/5 bg-black/10"
+                  className="flex flex-col p-2.5 rounded border border-white/[0.03] bg-black"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-medium text-zinc-200 text-xs truncate mr-2">{svc.name}</span>
+                    <span className="font-medium text-zinc-300 text-xs truncate mr-2 font-mono">{svc.name}</span>
                     <span className={`w-1.5 h-1.5 rounded-full ${color}`} />
                   </div>
-                  <span className="text-[9px] text-zinc-500 font-mono mt-0.5 truncate">{svc.desc}</span>
-                  <div className="flex items-center justify-between mt-1.5 pt-1.5 border-t border-white/5">
-                    <span className="text-[9px] text-zinc-600">Latency</span>
-                    <span className={`text-[9px] font-mono font-medium ${svc.status === "nominal" ? "text-zinc-400" : "text-amber-500"}`}>
+                  <span className="text-[9px] text-zinc-600 font-mono mt-0.5 truncate">{svc.desc}</span>
+                  <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-white/[0.03]">
+                    <span className="text-[9px] text-zinc-650 font-mono">LATENCY</span>
+                    <span className={`text-[9px] font-mono font-medium ${svc.status === "nominal" ? "text-zinc-500" : "text-amber-500"}`}>
                       {svc.latency}
                     </span>
                   </div>
@@ -114,13 +114,13 @@ export function RegionConfidenceStatus() {
   ]
 
   return (
-    <Card className="border border-white/5 bg-[#09090B] rounded-lg">
+    <Card className="border border-white/[0.04] bg-[#09090B] shadow-[0_1px_3px_rgba(0,0,0,0.6)] rounded-lg">
       <CardContent className="p-5 flex flex-col justify-between h-full space-y-4">
         
         {/* AI Confidence Meter */}
-        <div className="flex items-center justify-between border-b border-white/5 pb-2.5">
+        <div className="flex items-center justify-between border-b border-white/[0.04] pb-2.5">
           <div className="flex items-center gap-1.5">
-            <Cpu className="w-3.5 h-3.5 text-zinc-400" />
+            <Cpu className="w-3.5 h-3.5 text-zinc-500" />
             <h3 className="font-mono text-[10px] font-semibold tracking-wider text-zinc-400 uppercase">
               AI Confidence Score
             </h3>
@@ -128,20 +128,20 @@ export function RegionConfidenceStatus() {
           <span className="text-sm font-semibold text-white font-mono">{aiConfidenceScore}%</span>
         </div>
 
-        <div className="space-y-1">
+        <div className="space-y-1.5">
           <div className="flex justify-between items-center text-xs">
-            <span className="text-zinc-500 text-[10px] uppercase font-semibold">Remediation Certainty</span>
-            <span className="font-mono text-zinc-400 text-[9px] font-bold">
+            <span className="text-zinc-500 text-[9px] font-mono uppercase font-semibold">Remediation Certainty</span>
+            <span className="font-mono text-zinc-400 text-[8px] font-bold">
               {aiConfidenceScore > 90 ? "OPTIMAL" : "DEGRADED"}
             </span>
           </div>
-          <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+          <div className="w-full h-1 bg-zinc-950 rounded-full overflow-hidden border border-white/[0.02]">
             <div 
               className="h-full bg-white transition-all duration-700"
               style={{ width: `${aiConfidenceScore}%` }}
             ></div>
           </div>
-          <p className="text-[9px] text-zinc-600 leading-normal mt-1">
+          <p className="text-[9px] font-mono text-zinc-600 leading-normal mt-1.5">
             {aiConfidenceScore > 90 
               ? "Telemetry signals clear. Auto-pilot operations online." 
               : "Active anomaly detected. AI evaluating mitigation parameters."}
@@ -149,16 +149,16 @@ export function RegionConfidenceStatus() {
         </div>
 
         {/* Regional Health Nodes */}
-        <div className="space-y-1.5 pt-2 border-t border-white/5">
-          <div className="flex items-center gap-1.5 mb-1">
-            <Globe className="w-3 h-3 text-zinc-500" />
-            <span className="text-[9px] font-mono font-semibold text-zinc-400 uppercase tracking-wider">Region Clusters</span>
+        <div className="space-y-2 pt-3.5 border-t border-white/[0.04]">
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <Globe className="w-3 h-3 text-zinc-650" />
+            <span className="text-[9px] font-mono font-semibold text-zinc-550 uppercase tracking-wider">Region Clusters</span>
           </div>
           <div className="grid grid-cols-2 gap-2 text-xs">
             {regions.map((reg) => (
-              <div key={reg.name} className="flex items-center justify-between bg-black/20 p-2 rounded border border-white/5">
-                <span className="text-[9px] text-zinc-400 truncate mr-2">{reg.name.split(" ")[0]}</span>
-                <span className={`font-mono text-[9px] font-semibold ${reg.status === "healthy" ? "text-zinc-400" : "text-red-400"}`}>
+              <div key={reg.name} className="flex items-center justify-between bg-black p-2 rounded border border-white/[0.03]">
+                <span className="text-[9px] text-zinc-500 font-mono truncate mr-2">{reg.name.split(" ")[0]}</span>
+                <span className={`font-mono text-[9px] font-semibold ${reg.status === "healthy" ? "text-zinc-550" : "text-red-400 animate-pulse"}`}>
                   {reg.health}
                 </span>
               </div>

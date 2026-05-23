@@ -53,29 +53,29 @@ export function HeroMetrics() {
         return (
           <Card
             key={i}
-            className={`bg-[#09090B] border transition-all duration-200 ${
+            className={`bg-[#09090B] border shadow-[0_1px_3px_rgba(0,0,0,0.6)] rounded-lg transition-all duration-300 ${
               card.critical
-                ? "border-red-500/20"
-                : "border-white/5 hover:border-zinc-700"
+                ? "border-red-500/10 shadow-[0_0_10px_rgba(239,68,68,0.02)]"
+                : "border-white/[0.04] hover:border-white/[0.08]"
             }`}
           >
             <CardContent className="p-5">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[11px] font-mono font-semibold text-zinc-500 uppercase tracking-wider">
+              <div className="flex items-center justify-between mb-3.5">
+                <span className="text-[10px] font-mono font-semibold text-zinc-500 uppercase tracking-wider">
                   {card.title}
                 </span>
-                <span className="text-zinc-500">
+                <span className="text-zinc-650">
                   {card.icon}
                 </span>
               </div>
 
               <div className="flex items-baseline gap-2">
-                <h2 className={`text-2xl font-light tracking-tight ${card.critical ? 'text-red-400' : 'text-white'}`}>
+                <h2 className={`text-2xl font-light font-mono tracking-tight ${card.critical ? 'text-red-400' : 'text-white'}`}>
                   {card.value}
                 </h2>
               </div>
 
-              <div className="mt-2 flex items-center gap-1.5 text-[10px] font-mono">
+              <div className="mt-2.5 flex items-center gap-1.5 text-[9px] font-mono">
                 <span className={`font-semibold ${isGood ? "text-zinc-400" : card.critical ? "text-red-400" : "text-amber-500"}`}>
                   {card.change}
                 </span>

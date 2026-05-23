@@ -17,7 +17,7 @@ export function ExecutiveSummary() {
         affected: "None",
         eta: "N/A",
         revenueRisk: "$0.00 at risk",
-        severityColor: "text-zinc-400 border-white/5 bg-white/5",
+        severityColor: "text-zinc-550 border-white/[0.04] bg-white/[0.01]",
       }
     }
 
@@ -28,7 +28,7 @@ export function ExecutiveSummary() {
         affected: "payment-service ➔ pg-database",
         eta: "~3.5 minutes following Connection Pool fix",
         revenueRisk: "Est. $18.4k/hr revenue risk (340 users impacted)",
-        severityColor: "text-red-400 border-red-500/10 bg-red-500/5",
+        severityColor: "text-red-400 border-red-500/10 bg-red-500/5 animate-pulse",
       }
     }
 
@@ -39,7 +39,7 @@ export function ExecutiveSummary() {
         affected: "openai-proxy ➔ model-provider-node",
         eta: "Immediate on fallback route switch",
         revenueRisk: "AI autocomplete rate limits (120 users impacted/min)",
-        severityColor: "text-amber-400 border-amber-500/10 bg-amber-500/5",
+        severityColor: "text-amber-400 border-amber-500/10 bg-amber-500/5 animate-pulse",
       }
     }
 
@@ -50,7 +50,7 @@ export function ExecutiveSummary() {
         affected: "gateway ➔ order-service ➔ order-queue",
         eta: "~5.0 minutes on traffic throttling activation",
         revenueRisk: "12% queue drop risk ($6.5k billing backlog)",
-        severityColor: "text-blue-400 border-blue-500/10 bg-blue-500/5",
+        severityColor: "text-blue-400 border-blue-500/10 bg-blue-500/5 animate-pulse",
       }
     }
 
@@ -61,7 +61,7 @@ export function ExecutiveSummary() {
         affected: "auth-service ➔ signature-verification",
         eta: "~2.0 minutes after configuration rollback",
         revenueRisk: "100% of user logins blocked (SLA violation risk)",
-        severityColor: "text-purple-400 border-purple-500/10 bg-purple-500/5",
+        severityColor: "text-purple-400 border-purple-500/10 bg-purple-500/5 animate-pulse",
       }
     }
 
@@ -71,23 +71,23 @@ export function ExecutiveSummary() {
       affected: `${activeIncident.service} ➔ ${activeIncident.affectedRoute}`,
       eta: "Investigating via auto-remediation",
       revenueRisk: "Elevated response thresholds (SLA breach risk)",
-      severityColor: "text-amber-400 border-amber-500/10 bg-amber-500/5",
+      severityColor: "text-amber-400 border-amber-500/10 bg-amber-500/5 animate-pulse",
     }
   }
 
   const details = getImpactDetails()
 
   return (
-    <Card className="border border-white/5 bg-[#09090B] rounded-lg">
+    <Card className="border border-white/[0.04] bg-[#09090B] shadow-[0_1px_3px_rgba(0,0,0,0.6)] rounded-lg">
       <CardContent className="p-5 flex flex-col justify-between h-full">
         <div>
           {/* Header */}
-          <div className="flex items-center justify-between mb-3.5 pb-2.5 border-b border-white/5">
+          <div className="flex items-center justify-between mb-4 pb-2.5 border-b border-white/[0.04]">
             <div className="flex items-center gap-1.5">
               {activeIncident ? (
-                <ShieldAlert className="w-3.5 h-3.5 text-zinc-400" />
+                <ShieldAlert className="w-3.5 h-3.5 text-zinc-500" />
               ) : (
-                <CheckCircle2 className="w-3.5 h-3.5 text-zinc-400" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-zinc-500" />
               )}
               <h3 className="font-mono text-[10px] font-semibold tracking-wider text-zinc-400 uppercase">
                 Executive Summary
@@ -102,37 +102,37 @@ export function ExecutiveSummary() {
           {/* System State Description */}
           <div className="space-y-3.5">
             <div>
-              <div className="text-[9px] text-zinc-500 uppercase tracking-wider font-semibold">Active State</div>
-              <p className="text-xs font-semibold text-slate-200 mt-0.5 font-mono">{details.status}</p>
+              <div className="text-[9px] text-zinc-500 uppercase tracking-wider font-mono font-semibold">Active State</div>
+              <p className="text-xs font-semibold text-zinc-300 mt-0.5 font-mono">{details.status}</p>
             </div>
 
             <div>
-              <div className="text-[9px] text-zinc-500 uppercase tracking-wider font-semibold">Impact Estimate</div>
+              <div className="text-[9px] text-zinc-500 uppercase tracking-wider font-mono font-semibold">Impact Estimate</div>
               <p className="text-[11px] text-zinc-400 leading-normal mt-0.5">{details.impact}</p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 pt-2 border-t border-white/5">
+            <div className="grid grid-cols-2 gap-4 pt-3.5 border-t border-white/[0.04]">
               <div className="flex items-start gap-1.5">
-                <DollarSign className="w-3.5 h-3.5 text-zinc-500 mt-0.5 shrink-0" />
+                <DollarSign className="w-3.5 h-3.5 text-zinc-650 mt-0.5 shrink-0" />
                 <div>
-                  <div className="text-[9px] text-zinc-500 uppercase">Risk Index</div>
+                  <div className="text-[9px] text-zinc-500 uppercase font-mono font-semibold">Risk Index</div>
                   <div className="text-[10px] font-semibold text-zinc-300 font-mono mt-0.5">{details.revenueRisk}</div>
                 </div>
               </div>
 
               <div className="flex items-start gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-zinc-500 mt-0.5 shrink-0" />
+                <Clock className="w-3.5 h-3.5 text-zinc-650 mt-0.5 shrink-0" />
                 <div>
-                  <div className="text-[9px] text-zinc-500 uppercase">Recovery ETA</div>
+                  <div className="text-[9px] text-zinc-500 uppercase font-mono font-semibold">Recovery ETA</div>
                   <div className="text-[10px] font-semibold text-zinc-300 font-mono mt-0.5">{details.eta}</div>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-start gap-1.5 pt-2 border-t border-white/5">
-              <Layout className="w-3.5 h-3.5 text-zinc-500 mt-0.5 shrink-0" />
+            <div className="flex items-start gap-1.5 pt-3.5 border-t border-white/[0.04]">
+              <Layout className="w-3.5 h-3.5 text-zinc-650 mt-0.5 shrink-0" />
               <div>
-                <div className="text-[9px] text-zinc-500 uppercase">Dependency Node</div>
+                <div className="text-[9px] text-zinc-500 uppercase font-mono font-semibold">Dependency Node</div>
                 <div className="text-[10px] font-mono text-zinc-400 mt-0.5 truncate max-w-[200px]">{details.affected}</div>
               </div>
             </div>
