@@ -1,37 +1,176 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Trinetra AI README 😄🔥
 
-## Getting Started
+Use this directly in your README.md:
 
-First, run the development server:
+# 👁️ Trinetra AI
+> The Third Eye for Autonomous API Reliability
+Trinetra AI is an AI-native observability and incident response platform built for modern engineering teams.
+It continuously:
+- monitors APIs
+- analyzes telemetry
+- detects anomalies
+- explains outages using AI
+- recommends remediation workflows
+- stabilizes infrastructure
+Built during the AI Hackathon for Builders 🚀
+---
+# ✨ Features
+## 🔥 Real-Time Telemetry Monitoring
+- Live API request tracking
+- Latency monitoring
+- Error detection
+- Traffic spike analysis
+- Operational health metrics
+## 🧠 AI-Powered Incident Analysis
+Trinetra uses Google Gemini AI to:
+- identify root causes
+- summarize incidents
+- explain outages
+- recommend recovery actions
+- provide contextual SRE reasoning
+## 🚨 Autonomous Incident Detection
+Detects:
+- 5xx failure spikes
+- latency degradation
+- authentication storms
+- database exhaustion
+- OpenAI/Gemini degradation
+## 🔌 Lightweight Telemetry SDK
+External applications can stream telemetry into Trinetra using the built-in SDK.
+Example:
+```ts
+Trinetra.captureRequest({
+  route: "/chat",
+  method: "POST",
+  status: 500,
+  latency: 4200,
+})
 
-```bash
+🛠 AI Recovery Action Center
+
+Operational remediation workflows:
+
+* restart services
+* enable fallback providers
+* scale infrastructure
+* stabilize traffic
+
+💬 Ask Trinetra
+
+An AI SRE copilot for conversational debugging and operational insights.
+
+⸻
+
+🏗 Architecture
+
+Demo App
+   ↓
+Trinetra SDK
+   ↓
+/api/telemetry
+   ↓
+Telemetry Store
+   ↓
+Incident Detection Engine
+   ↓
+Gemini AI Analysis
+   ↓
+Dashboard + Recovery Workflows
+
+⸻
+
+⚡ Tech Stack
+
+* Next.js 15
+* TypeScript
+* Tailwind CSS v4
+* Google Gemini API
+* Recharts
+* Lucide Icons
+* Vercel
+
+⸻
+
+🎯 Demo Scenarios
+
+Trinetra includes guided failure simulations:
+
+* OpenAI API Meltdown
+* Database Exhaustion
+* Traffic Surge Cascade
+* Authentication Failure Storm
+
+Each scenario triggers:
+
+* telemetry degradation
+* incident escalation
+* AI analysis
+* recovery workflows
+
+⸻
+
+🚀 Local Setup
+
+1. Clone Repository
+
+git clone https://github.com/YOUR_USERNAME/trinetra-ai.git
+cd trinetra-ai
+
+2. Install Dependencies
+
+npm install
+
+3. Configure Environment Variables
+
+Create .env.local
+
+GOOGLE_API_KEY=your_google_api_key
+
+4. Start Development Server
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+⸻
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+🧪 Demo Flow
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Launch Trinetra Dashboard
+2. Trigger a failure scenario
+3. Observe telemetry degradation
+4. Watch AI incident analysis activate
+5. Execute remediation workflows
+6. Stabilize production environment
 
-## Learn More
+⸻
 
-To learn more about Next.js, take a look at the following resources:
+🔒 Fail-Safe AI Architecture
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Trinetra includes deterministic fallback systems.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+If:
 
-## Deploy on Vercel
+* Gemini API fails
+* rate limits occur
+* network becomes unavailable
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The platform automatically switches to heuristic SRE reasoning to ensure demo reliability.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# Trinetra-Ai
+⸻
+
+🌌 Vision
+
+Modern observability tools detect incidents.
+
+Trinetra goes further:
+
+* reasoning
+* diagnosis
+* operational guidance
+* AI-assisted recovery
+
+The goal is to build the future of autonomous reliability engineering.
+
+⸻
+
+👨‍💻 Author
+Kshitij Renge
