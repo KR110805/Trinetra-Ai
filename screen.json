@@ -1,0 +1,300 @@
+{
+  "screenshot": {
+    "name": "projects/14654242039247127474/files/594a64d0e9e546918aabcd1435c7cee8",
+    "downloadUrl": "https://lh3.googleusercontent.com/aida/ADBb0uhC3MhXLidrCklDOiFKZSDLWoDPW1ixsAyAbGOBimsaFANGYt3Ge0ExClvHMb7ezf7OyvZoNgX4_XikpUu_pAdzNTpTl4UpsEgSRQYufxqLCYGLHO7bziLqMTt1OqgPvLaEjWmyvGEB241OLFWgJDtqSGSy26_RGtHdNeNYLnelevHBXfUEKZ6kNAZWpA0STEQFB4VBbrHjGAwblbXPbS_OLYWhGZjo-VdmOqBXCZ3IvizGLZsO1nlE4hQ"
+  },
+  "htmlCode": {
+    "name": "projects/14654242039247127474/files/1e00845b1e36462189186507c64e6ad7",
+    "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzBlZWM1NjNhMzgxYjRkZTg5ZTljZDQ2ZGQwMmFiNmYwEgsSBxCE-LLdyhsYAZIBJAoKcHJvamVjdF9pZBIWQhQxNDY1NDI0MjAzOTI0NzEyNzQ3NA&filename=&opi=89354086",
+    "mimeType": "text/html"
+  },
+  "id": "ecd12ecffef64564aa06299c9f50e9c4",
+  "generatedBy": "figaro_agent",
+  "width": "2560",
+  "height": "2048",
+  "title": "Trinetra — Autonomous AI Reliability",
+  "prompt": "Create the main 'Trinetra' platform dashboard. \n\nLayout:\n- Side navigation with a sleek, dark aesthetic.\n- Hero Section: 'TRINETRA' title, 'The Third Eye for Autonomous API Reliability' subheadline, 'Observe. Reason. Recover.' tagline. Include an animated telemetry grid (using CSS) and scenario buttons (OpenAI API Meltdown, Database Exhaustion, Traffic Surge Cascade, Authentication Failure Storm).\n- Executive Overview: Apple-style metric cards for System Health (Healthy), API Requests/min (42k), Avg Latency (124ms), Error Rate (0.02%), and AI SRE Confidence (98%).\n- Live Analytics: Monochrome line charts for latency trends and traffic throughput.\n- Active Incidents: A premium feed showing a 'Critical' incident (OpenAI API Latency Spike) with 'Investigating' status.\n- AI Insights: Root cause analysis panel showing 'Cascading failure in gateway tier' with reasoning and impact.\n- Recovery Action Center: Actions for 'Restart API Workers', 'Scale Gateway Replicas', and 'Rollback Deployment' with a CLI-style log (e.g., 'Verifying API health... Recovery stabilization confirmed.').\n- Incident Timeline: Vertical timeline of events from 'Traffic surge detected' to 'AI remediation initiated'.\n- Ask Trinetra: Minimal conversational interface at the bottom with prompt chips.\n\nStyle: Monochrome black/white/gray, matte surfaces, Inter typography, 1px borders, subtle transitions, no clutter. Apple-level refinement.",
+  "name": "projects/14654242039247127474/screens/ecd12ecffef64564aa06299c9f50e9c4",
+  "theme": {
+    "colorMode": "DARK",
+    "font": "INTER",
+    "roundness": "ROUND_FOUR",
+    "customColor": "#fafafa",
+    "headlineFont": "INTER",
+    "bodyFont": "INTER",
+    "labelFont": "JETBRAINS_MONO",
+    "namedColors": {
+      "tertiary_fixed_dim": "#cbc6c1",
+      "on_tertiary_fixed": "#1d1b19",
+      "secondary": "#c8c6c5",
+      "surface_container": "#201f1f",
+      "on_secondary_container": "#b7b4b4",
+      "surface_container_lowest": "#0e0e0e",
+      "surface-deep": "#000000",
+      "background": "#131313",
+      "inverse_primary": "#5d5f5f",
+      "surface_container_highest": "#353534",
+      "on_secondary": "#313030",
+      "outline": "#8e9192",
+      "on_primary_fixed_variant": "#454747",
+      "on_background": "#e5e2e1",
+      "inverse_on_surface": "#313030",
+      "secondary_container": "#474746",
+      "on_error": "#690005",
+      "error": "#ffb4ab",
+      "on_primary": "#2f3131",
+      "on_primary_fixed": "#1a1c1c",
+      "primary_fixed_dim": "#c6c6c7",
+      "success": "#10B981",
+      "secondary_fixed_dim": "#c8c6c5",
+      "surface_dim": "#131313",
+      "on_error_container": "#ffdad6",
+      "tertiary_fixed": "#e7e1dd",
+      "surface_tint": "#c6c6c7",
+      "surface": "#131313",
+      "on_tertiary_container": "#676460",
+      "critical": "#EF4444",
+      "tertiary_container": "#e7e1dd",
+      "surface_container_low": "#1c1b1b",
+      "outline_variant": "#444748",
+      "surface-elevated": "#262626",
+      "surface_container_high": "#2a2a2a",
+      "surface_variant": "#353534",
+      "warning": "#F59E0B",
+      "surface-matte": "#111111",
+      "primary_fixed": "#e2e2e2",
+      "primary": "#ffffff",
+      "secondary_fixed": "#e5e2e1",
+      "primary_container": "#e2e2e2",
+      "inverse_surface": "#e5e2e1",
+      "on_primary_container": "#636565",
+      "on_surface_variant": "#c4c7c8",
+      "on_secondary_fixed": "#1c1b1b",
+      "surface_bright": "#3a3939",
+      "on_surface": "#e5e2e1",
+      "tertiary": "#ffffff",
+      "on_secondary_fixed_variant": "#474746",
+      "error_container": "#93000a",
+      "on_tertiary_fixed_variant": "#494643",
+      "on_tertiary": "#32302d"
+    },
+    "designMd": "---\nname: Obsidian Intelligence\ncolors:\n  surface: '#131313'\n  surface-dim: '#131313'\n  surface-bright: '#3a3939'\n  surface-container-lowest: '#0e0e0e'\n  surface-container-low: '#1c1b1b'\n  surface-container: '#201f1f'\n  surface-container-high: '#2a2a2a'\n  surface-container-highest: '#353534'\n  on-surface: '#e5e2e1'\n  on-surface-variant: '#c4c7c8'\n  inverse-surface: '#e5e2e1'\n  inverse-on-surface: '#313030'\n  outline: '#8e9192'\n  outline-variant: '#444748'\n  surface-tint: '#c6c6c7'\n  primary: '#ffffff'\n  on-primary: '#2f3131'\n  primary-container: '#e2e2e2'\n  on-primary-container: '#636565'\n  inverse-primary: '#5d5f5f'\n  secondary: '#c8c6c5'\n  on-secondary: '#313030'\n  secondary-container: '#474746'\n  on-secondary-container: '#b7b4b4'\n  tertiary: '#ffffff'\n  on-tertiary: '#32302d'\n  tertiary-container: '#e7e1dd'\n  on-tertiary-container: '#676460'\n  error: '#ffb4ab'\n  on-error: '#690005'\n  error-container: '#93000a'\n  on-error-container: '#ffdad6'\n  primary-fixed: '#e2e2e2'\n  primary-fixed-dim: '#c6c6c7'\n  on-primary-fixed: '#1a1c1c'\n  on-primary-fixed-variant: '#454747'\n  secondary-fixed: '#e5e2e1'\n  secondary-fixed-dim: '#c8c6c5'\n  on-secondary-fixed: '#1c1b1b'\n  on-secondary-fixed-variant: '#474746'\n  tertiary-fixed: '#e7e1dd'\n  tertiary-fixed-dim: '#cbc6c1'\n  on-tertiary-fixed: '#1d1b19'\n  on-tertiary-fixed-variant: '#494643'\n  background: '#131313'\n  on-background: '#e5e2e1'\n  surface-variant: '#353534'\n  surface-deep: '#000000'\n  surface-matte: '#111111'\n  surface-elevated: '#262626'\n  critical: '#EF4444'\n  warning: '#F59E0B'\n  success: '#10B981'\ntypography:\n  headline-xl:\n    fontFamily: Inter\n    fontSize: 48px\n    fontWeight: '600'\n    lineHeight: 56px\n    letterSpacing: -0.02em\n  headline-lg:\n    fontFamily: Inter\n    fontSize: 32px\n    fontWeight: '500'\n    lineHeight: 40px\n    letterSpacing: -0.01em\n  headline-lg-mobile:\n    fontFamily: Inter\n    fontSize: 24px\n    fontWeight: '500'\n    lineHeight: 32px\n  title-md:\n    fontFamily: Inter\n    fontSize: 18px\n    fontWeight: '500'\n    lineHeight: 24px\n  body-md:\n    fontFamily: Inter\n    fontSize: 14px\n    fontWeight: '400'\n    lineHeight: 20px\n  body-sm:\n    fontFamily: Inter\n    fontSize: 12px\n    fontWeight: '400'\n    lineHeight: 18px\n  code-sm:\n    fontFamily: JetBrains Mono\n    fontSize: 12px\n    fontWeight: '400'\n    lineHeight: 20px\n  label-caps:\n    fontFamily: Inter\n    fontSize: 10px\n    fontWeight: '700'\n    lineHeight: 12px\n    letterSpacing: 0.05em\nrounded:\n  sm: 0.125rem\n  DEFAULT: 0.25rem\n  md: 0.375rem\n  lg: 0.5rem\n  xl: 0.75rem\n  full: 9999px\nspacing:\n  unit: 4px\n  container-max: 1440px\n  gutter: 24px\n  margin-sm: 16px\n  margin-md: 32px\n  margin-lg: 64px\n---\n\n## Brand & Style\n\nThe design system is an AI-native observability framework rooted in **Minimalism** and **Modern Corporate** aesthetics. It prioritizes \"Operational Trust\" through a reductionist approach that removes visual noise to amplify critical data. Inspired by the precision of high-end hardware and developer-centric productivity tools, the style leverages matte surfaces, generous negative space, and a strict monochrome foundation.\n\nThe target experience is one of calm confidence; even in high-incident environments, the UI remains steady and legible. Every element is intentionally \"quiet\" until an anomaly occurs, at which point the restrained use of semantic color provides immediate, unambiguous signal.\n\n## Colors\n\nThis is a **Dark Mode primary** system. The palette is built on a hierarchy of deep blacks and grays to create a \"matte\" feel.\n\n- **Foundations:** The primary background is `#0A0A0A`. For deep immersion (like code editors or vertical timelines), use `#000000`. \n- **Accents:** Semantic colors (Red, Amber, Green) must be used sparingly. They are the only chromatic elements allowed in the interface, reserved strictly for status indicators, alert thresholds, and health states.\n- **Typography:** The primary text color is `#FAFAFA`, providing high contrast against the dark surfaces without the harshness of pure white. Secondary metadata uses `#A3A3A3` (derived neutral).\n\n## Typography\n\nThe system utilizes **Inter** for all UI and display elements to achieve a neutral, systematic feel. **JetBrains Mono** is introduced for technical data, logs, and CLI interfaces to reinforce the developer-native nature of the tool.\n\n- **Headlines:** Use Light or Regular weights for large headlines to maintain an elegant, Apple-inspired presence.\n- **Hierarchy:** Use spacing and capitalization (Label Caps) rather than heavy weights to distinguish sections.\n- **Readability:** For long-form logs or JSON payloads, use `code-sm` with increased line height to ensure clarity during deep-dive debugging.\n\n## Layout & Spacing\n\nThe layout follows a **Fixed Grid** philosophy for dashboard views to maintain a consistent density, while marketing or high-level overview pages utilize a fluid approach.\n\n- **Grid:** A 12-column grid with 24px gutters.\n- **Rhythm:** An 8px linear scale (with 4px sub-steps) governs all padding and margins. \n- **Density:** High-density is preferred for \"Operational\" views (tables, timelines), while \"Analytical\" views (Executive dashboards) should increase margins to `32px` or `64px` to provide visual breathing room.\n- **Mobile:** On mobile devices, the 12-column grid collapses to 1 column with 16px side margins.\n\n## Elevation & Depth\n\nThis system rejects traditional shadows in favor of **Tonal Layers** and **Low-Contrast Outlines**.\n\n- **Layering:** Depth is communicated by lightness. The further \"forward\" an object is, the lighter its gray hex value. \n  - Level 0 (Base): `#0A0A0A`\n  - Level 1 (Cards/Sidebar): `#111111`\n  - Level 2 (Popovers/Tooltips): `#262626`\n- **Borders:** Use subtle 1px borders using `#262626` (or a 10% white overlay) to define edges on dark surfaces.\n- **Glassmorphism:** For overlays like Command Palettes (CMD+K), apply a 12px backdrop-blur with a 60% opaque `#171717` fill to maintain context of the underlying data.\n\n## Shapes\n\nThe shape language is **Soft** and disciplined. \n\n- **Components:** Buttons, input fields, and small cards use a `4px` (0.25rem) radius.\n- **Containers:** Larger dashboard modules or modal containers use `8px` (0.5rem).\n- **Interactive Elements:** Checkboxes and radio buttons should maintain the same `4px` radius to feel cohesive with the input system, rather than being fully circular.\n\n## Components\n\n- **Buttons:** Primary buttons are Solid `#FAFAFA` with `#000000` text. Secondary buttons are ghost-style with a 1px `#262626` border.\n- **Status Indicators:** Small, non-glowing 8px circles. Use semantic colors only. For \"Critical\" states, a subtle 2px outer stroke of the same color at 20% opacity can be added for urgency.\n- **Matte Cards:** Background `#111111` with no shadow and a `#262626` 1px border. Titles within cards should be `title-md`.\n- **Charts:** Use monochrome lines (White/Gray). Use semantic colors only for the \"threshold\" or \"alert\" line within the chart. Gridlines should be `#171717`.\n- **Vertical Timelines:** A 1px vertical spine in `#262626`. Events are marked by small `#FAFAFA` dots or semantic status icons.\n- **CLI/Command Palette:** A centered modal with backdrop blur. High-contrast selection states (White background/Black text).\n- **Input Fields:** Background `#000000`, 1px `#262626` border. On focus, the border brightens to `#FAFAFA`.",
+    "colorVariant": "FIDELITY",
+    "overridePrimaryColor": "#fafafa",
+    "overrideSecondaryColor": "#171717",
+    "overrideNeutralColor": "#0a0a0a",
+    "spacingScale": 2,
+    "typography": {
+      "body-sm": {
+        "fontFamily": "Inter",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "lineHeight": "18px"
+      },
+      "headline-lg": {
+        "fontFamily": "Inter",
+        "fontSize": "32px",
+        "fontWeight": "500",
+        "lineHeight": "40px",
+        "letterSpacing": "-0.01em"
+      },
+      "headline-lg-mobile": {
+        "fontFamily": "Inter",
+        "fontSize": "24px",
+        "fontWeight": "500",
+        "lineHeight": "32px"
+      },
+      "headline-xl": {
+        "fontFamily": "Inter",
+        "fontSize": "48px",
+        "fontWeight": "600",
+        "lineHeight": "56px",
+        "letterSpacing": "-0.02em"
+      },
+      "code-sm": {
+        "fontFamily": "JetBrains Mono",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "lineHeight": "20px"
+      },
+      "label-caps": {
+        "fontFamily": "Inter",
+        "fontSize": "10px",
+        "fontWeight": "700",
+        "lineHeight": "12px",
+        "letterSpacing": "0.05em"
+      },
+      "title-md": {
+        "fontFamily": "Inter",
+        "fontSize": "18px",
+        "fontWeight": "500",
+        "lineHeight": "24px"
+      },
+      "body-md": {
+        "fontFamily": "Inter",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20px"
+      }
+    },
+    "spacing": {
+      "gutter": "24px",
+      "margin-md": "32px",
+      "margin-lg": "64px",
+      "container-max": "1440px",
+      "margin-sm": "16px",
+      "unit": "4px"
+    },
+    "headlineFontFamily": "Inter",
+    "bodyFontFamily": "Inter",
+    "labelFontFamily": "Jetbrains Mono"
+  },
+  "deviceType": "DESKTOP",
+  "screenType": "DESIGN",
+  "screenMetadata": {
+    "agentType": "PRO_AGENT",
+    "status": "COMPLETE"
+  },
+  "designSystem": {
+    "name": "assets/3b27e438844d4914b6eea19bc2e4e8b0",
+    "designSystem": {
+      "displayName": "Obsidian Intelligence",
+      "styleGuidelines": "## Brand & Style\n\nThe design system is an AI-native observability framework rooted in **Minimalism** and **Modern Corporate** aesthetics. It prioritizes \"Operational Trust\" through a reductionist approach that removes visual noise to amplify critical data. Inspired by the precision of high-end hardware and developer-centric productivity tools, the style leverages matte surfaces, generous negative space, and a strict monochrome foundation.\n\nThe target experience is one of calm confidence; even in high-incident environments, the UI remains steady and legible. Every element is intentionally \"quiet\" until an anomaly occurs, at which point the restrained use of semantic color provides immediate, unambiguous signal.\n\n## Layout & Spacing\n\nThe layout follows a **Fixed Grid** philosophy for dashboard views to maintain a consistent density, while marketing or high-level overview pages utilize a fluid approach.\n\n- **Grid:** A 12-column grid with 24px gutters.\n- **Rhythm:** An 8px linear scale (with 4px sub-steps) governs all padding and margins. \n- **Density:** High-density is preferred for \"Operational\" views (tables, timelines), while \"Analytical\" views (Executive dashboards) should increase margins to `32px` or `64px` to provide visual breathing room.\n- **Mobile:** On mobile devices, the 12-column grid collapses to 1 column with 16px side margins.\n\n## Elevation & Depth\n\nThis system rejects traditional shadows in favor of **Tonal Layers** and **Low-Contrast Outlines**.\n\n- **Layering:** Depth is communicated by lightness. The further \"forward\" an object is, the lighter its gray hex value. \n  - Level 0 (Base): `#0A0A0A`\n  - Level 1 (Cards/Sidebar): `#111111`\n  - Level 2 (Popovers/Tooltips): `#262626`\n- **Borders:** Use subtle 1px borders using `#262626` (or a 10% white overlay) to define edges on dark surfaces.\n- **Glassmorphism:** For overlays like Command Palettes (CMD+K), apply a 12px backdrop-blur with a 60% opaque `#171717` fill to maintain context of the underlying data.\n\n## Components\n\n- **Buttons:** Primary buttons are Solid `#FAFAFA` with `#000000` text. Secondary buttons are ghost-style with a 1px `#262626` border.\n- **Status Indicators:** Small, non-glowing 8px circles. Use semantic colors only. For \"Critical\" states, a subtle 2px outer stroke of the same color at 20% opacity can be added for urgency.\n- **Matte Cards:** Background `#111111` with no shadow and a `#262626` 1px border. Titles within cards should be `title-md`.\n- **Charts:** Use monochrome lines (White/Gray). Use semantic colors only for the \"threshold\" or \"alert\" line within the chart. Gridlines should be `#171717`.\n- **Vertical Timelines:** A 1px vertical spine in `#262626`. Events are marked by small `#FAFAFA` dots or semantic status icons.\n- **CLI/Command Palette:** A centered modal with backdrop blur. High-contrast selection states (White background/Black text).\n- **Input Fields:** Background `#000000`, 1px `#262626` border. On focus, the border brightens to `#FAFAFA`.",
+      "theme": {
+        "colorMode": "DARK",
+        "font": "INTER",
+        "roundness": "ROUND_FOUR",
+        "customColor": "#fafafa",
+        "headlineFont": "INTER",
+        "bodyFont": "INTER",
+        "labelFont": "JETBRAINS_MONO",
+        "namedColors": {
+          "on_error": "#690005",
+          "inverse_on_surface": "#313030",
+          "secondary_container": "#474746",
+          "on_primary": "#2f3131",
+          "error": "#ffb4ab",
+          "surface_container_lowest": "#0e0e0e",
+          "surface-deep": "#000000",
+          "on_secondary_container": "#b7b4b4",
+          "background": "#131313",
+          "tertiary_fixed_dim": "#cbc6c1",
+          "on_tertiary_fixed": "#1d1b19",
+          "surface_container": "#201f1f",
+          "secondary": "#c8c6c5",
+          "on_secondary": "#313030",
+          "outline": "#8e9192",
+          "on_primary_fixed_variant": "#454747",
+          "on_background": "#e5e2e1",
+          "inverse_primary": "#5d5f5f",
+          "surface_container_highest": "#353534",
+          "tertiary_container": "#e7e1dd",
+          "on_tertiary_container": "#676460",
+          "critical": "#EF4444",
+          "success": "#10B981",
+          "secondary_fixed_dim": "#c8c6c5",
+          "surface_dim": "#131313",
+          "on_error_container": "#ffdad6",
+          "on_primary_fixed": "#1a1c1c",
+          "primary_fixed_dim": "#c6c6c7",
+          "surface_tint": "#c6c6c7",
+          "surface": "#131313",
+          "tertiary_fixed": "#e7e1dd",
+          "warning": "#F59E0B",
+          "outline_variant": "#444748",
+          "surface_container_low": "#1c1b1b",
+          "surface-elevated": "#262626",
+          "surface_container_high": "#2a2a2a",
+          "surface_variant": "#353534",
+          "on_surface": "#e5e2e1",
+          "tertiary": "#ffffff",
+          "on_secondary_fixed_variant": "#474746",
+          "on_tertiary_fixed_variant": "#494643",
+          "on_tertiary": "#32302d",
+          "error_container": "#93000a",
+          "surface-matte": "#111111",
+          "primary_fixed": "#e2e2e2",
+          "primary": "#ffffff",
+          "secondary_fixed": "#e5e2e1",
+          "primary_container": "#e2e2e2",
+          "inverse_surface": "#e5e2e1",
+          "on_surface_variant": "#c4c7c8",
+          "on_secondary_fixed": "#1c1b1b",
+          "surface_bright": "#3a3939",
+          "on_primary_container": "#636565"
+        },
+        "designMd": "---\nname: Obsidian Intelligence\ncolors:\n  surface: '#131313'\n  surface-dim: '#131313'\n  surface-bright: '#3a3939'\n  surface-container-lowest: '#0e0e0e'\n  surface-container-low: '#1c1b1b'\n  surface-container: '#201f1f'\n  surface-container-high: '#2a2a2a'\n  surface-container-highest: '#353534'\n  on-surface: '#e5e2e1'\n  on-surface-variant: '#c4c7c8'\n  inverse-surface: '#e5e2e1'\n  inverse-on-surface: '#313030'\n  outline: '#8e9192'\n  outline-variant: '#444748'\n  surface-tint: '#c6c6c7'\n  primary: '#ffffff'\n  on-primary: '#2f3131'\n  primary-container: '#e2e2e2'\n  on-primary-container: '#636565'\n  inverse-primary: '#5d5f5f'\n  secondary: '#c8c6c5'\n  on-secondary: '#313030'\n  secondary-container: '#474746'\n  on-secondary-container: '#b7b4b4'\n  tertiary: '#ffffff'\n  on-tertiary: '#32302d'\n  tertiary-container: '#e7e1dd'\n  on-tertiary-container: '#676460'\n  error: '#ffb4ab'\n  on-error: '#690005'\n  error-container: '#93000a'\n  on-error-container: '#ffdad6'\n  primary-fixed: '#e2e2e2'\n  primary-fixed-dim: '#c6c6c7'\n  on-primary-fixed: '#1a1c1c'\n  on-primary-fixed-variant: '#454747'\n  secondary-fixed: '#e5e2e1'\n  secondary-fixed-dim: '#c8c6c5'\n  on-secondary-fixed: '#1c1b1b'\n  on-secondary-fixed-variant: '#474746'\n  tertiary-fixed: '#e7e1dd'\n  tertiary-fixed-dim: '#cbc6c1'\n  on-tertiary-fixed: '#1d1b19'\n  on-tertiary-fixed-variant: '#494643'\n  background: '#131313'\n  on-background: '#e5e2e1'\n  surface-variant: '#353534'\n  surface-deep: '#000000'\n  surface-matte: '#111111'\n  surface-elevated: '#262626'\n  critical: '#EF4444'\n  warning: '#F59E0B'\n  success: '#10B981'\ntypography:\n  headline-xl:\n    fontFamily: Inter\n    fontSize: 48px\n    fontWeight: '600'\n    lineHeight: 56px\n    letterSpacing: -0.02em\n  headline-lg:\n    fontFamily: Inter\n    fontSize: 32px\n    fontWeight: '500'\n    lineHeight: 40px\n    letterSpacing: -0.01em\n  headline-lg-mobile:\n    fontFamily: Inter\n    fontSize: 24px\n    fontWeight: '500'\n    lineHeight: 32px\n  title-md:\n    fontFamily: Inter\n    fontSize: 18px\n    fontWeight: '500'\n    lineHeight: 24px\n  body-md:\n    fontFamily: Inter\n    fontSize: 14px\n    fontWeight: '400'\n    lineHeight: 20px\n  body-sm:\n    fontFamily: Inter\n    fontSize: 12px\n    fontWeight: '400'\n    lineHeight: 18px\n  code-sm:\n    fontFamily: JetBrains Mono\n    fontSize: 12px\n    fontWeight: '400'\n    lineHeight: 20px\n  label-caps:\n    fontFamily: Inter\n    fontSize: 10px\n    fontWeight: '700'\n    lineHeight: 12px\n    letterSpacing: 0.05em\nrounded:\n  sm: 0.125rem\n  DEFAULT: 0.25rem\n  md: 0.375rem\n  lg: 0.5rem\n  xl: 0.75rem\n  full: 9999px\nspacing:\n  unit: 4px\n  container-max: 1440px\n  gutter: 24px\n  margin-sm: 16px\n  margin-md: 32px\n  margin-lg: 64px\n---\n\n## Brand & Style\n\nThe design system is an AI-native observability framework rooted in **Minimalism** and **Modern Corporate** aesthetics. It prioritizes \"Operational Trust\" through a reductionist approach that removes visual noise to amplify critical data. Inspired by the precision of high-end hardware and developer-centric productivity tools, the style leverages matte surfaces, generous negative space, and a strict monochrome foundation.\n\nThe target experience is one of calm confidence; even in high-incident environments, the UI remains steady and legible. Every element is intentionally \"quiet\" until an anomaly occurs, at which point the restrained use of semantic color provides immediate, unambiguous signal.\n\n## Colors\n\nThis is a **Dark Mode primary** system. The palette is built on a hierarchy of deep blacks and grays to create a \"matte\" feel.\n\n- **Foundations:** The primary background is `#0A0A0A`. For deep immersion (like code editors or vertical timelines), use `#000000`. \n- **Accents:** Semantic colors (Red, Amber, Green) must be used sparingly. They are the only chromatic elements allowed in the interface, reserved strictly for status indicators, alert thresholds, and health states.\n- **Typography:** The primary text color is `#FAFAFA`, providing high contrast against the dark surfaces without the harshness of pure white. Secondary metadata uses `#A3A3A3` (derived neutral).\n\n## Typography\n\nThe system utilizes **Inter** for all UI and display elements to achieve a neutral, systematic feel. **JetBrains Mono** is introduced for technical data, logs, and CLI interfaces to reinforce the developer-native nature of the tool.\n\n- **Headlines:** Use Light or Regular weights for large headlines to maintain an elegant, Apple-inspired presence.\n- **Hierarchy:** Use spacing and capitalization (Label Caps) rather than heavy weights to distinguish sections.\n- **Readability:** For long-form logs or JSON payloads, use `code-sm` with increased line height to ensure clarity during deep-dive debugging.\n\n## Layout & Spacing\n\nThe layout follows a **Fixed Grid** philosophy for dashboard views to maintain a consistent density, while marketing or high-level overview pages utilize a fluid approach.\n\n- **Grid:** A 12-column grid with 24px gutters.\n- **Rhythm:** An 8px linear scale (with 4px sub-steps) governs all padding and margins. \n- **Density:** High-density is preferred for \"Operational\" views (tables, timelines), while \"Analytical\" views (Executive dashboards) should increase margins to `32px` or `64px` to provide visual breathing room.\n- **Mobile:** On mobile devices, the 12-column grid collapses to 1 column with 16px side margins.\n\n## Elevation & Depth\n\nThis system rejects traditional shadows in favor of **Tonal Layers** and **Low-Contrast Outlines**.\n\n- **Layering:** Depth is communicated by lightness. The further \"forward\" an object is, the lighter its gray hex value. \n  - Level 0 (Base): `#0A0A0A`\n  - Level 1 (Cards/Sidebar): `#111111`\n  - Level 2 (Popovers/Tooltips): `#262626`\n- **Borders:** Use subtle 1px borders using `#262626` (or a 10% white overlay) to define edges on dark surfaces.\n- **Glassmorphism:** For overlays like Command Palettes (CMD+K), apply a 12px backdrop-blur with a 60% opaque `#171717` fill to maintain context of the underlying data.\n\n## Shapes\n\nThe shape language is **Soft** and disciplined. \n\n- **Components:** Buttons, input fields, and small cards use a `4px` (0.25rem) radius.\n- **Containers:** Larger dashboard modules or modal containers use `8px` (0.5rem).\n- **Interactive Elements:** Checkboxes and radio buttons should maintain the same `4px` radius to feel cohesive with the input system, rather than being fully circular.\n\n## Components\n\n- **Buttons:** Primary buttons are Solid `#FAFAFA` with `#000000` text. Secondary buttons are ghost-style with a 1px `#262626` border.\n- **Status Indicators:** Small, non-glowing 8px circles. Use semantic colors only. For \"Critical\" states, a subtle 2px outer stroke of the same color at 20% opacity can be added for urgency.\n- **Matte Cards:** Background `#111111` with no shadow and a `#262626` 1px border. Titles within cards should be `title-md`.\n- **Charts:** Use monochrome lines (White/Gray). Use semantic colors only for the \"threshold\" or \"alert\" line within the chart. Gridlines should be `#171717`.\n- **Vertical Timelines:** A 1px vertical spine in `#262626`. Events are marked by small `#FAFAFA` dots or semantic status icons.\n- **CLI/Command Palette:** A centered modal with backdrop blur. High-contrast selection states (White background/Black text).\n- **Input Fields:** Background `#000000`, 1px `#262626` border. On focus, the border brightens to `#FAFAFA`.",
+        "colorVariant": "FIDELITY",
+        "overridePrimaryColor": "#fafafa",
+        "overrideSecondaryColor": "#171717",
+        "overrideNeutralColor": "#0a0a0a",
+        "spacingScale": 2,
+        "typography": {
+          "code-sm": {
+            "fontFamily": "JetBrains Mono",
+            "fontSize": "12px",
+            "fontWeight": "400",
+            "lineHeight": "20px"
+          },
+          "headline-xl": {
+            "fontFamily": "Inter",
+            "fontSize": "48px",
+            "fontWeight": "600",
+            "lineHeight": "56px",
+            "letterSpacing": "-0.02em"
+          },
+          "headline-lg-mobile": {
+            "fontFamily": "Inter",
+            "fontSize": "24px",
+            "fontWeight": "500",
+            "lineHeight": "32px"
+          },
+          "body-md": {
+            "fontFamily": "Inter",
+            "fontSize": "14px",
+            "fontWeight": "400",
+            "lineHeight": "20px"
+          },
+          "label-caps": {
+            "fontFamily": "Inter",
+            "fontSize": "10px",
+            "fontWeight": "700",
+            "lineHeight": "12px",
+            "letterSpacing": "0.05em"
+          },
+          "title-md": {
+            "fontFamily": "Inter",
+            "fontSize": "18px",
+            "fontWeight": "500",
+            "lineHeight": "24px"
+          },
+          "body-sm": {
+            "fontFamily": "Inter",
+            "fontSize": "12px",
+            "fontWeight": "400",
+            "lineHeight": "18px"
+          },
+          "headline-lg": {
+            "fontFamily": "Inter",
+            "fontSize": "32px",
+            "fontWeight": "500",
+            "lineHeight": "40px",
+            "letterSpacing": "-0.01em"
+          }
+        },
+        "spacing": {
+          "margin-md": "32px",
+          "margin-lg": "64px",
+          "container-max": "1440px",
+          "gutter": "24px",
+          "margin-sm": "16px",
+          "unit": "4px"
+        },
+        "headlineFontFamily": "Inter",
+        "bodyFontFamily": "Inter",
+        "labelFontFamily": "Jetbrains Mono"
+      }
+    },
+    "version": "1"
+  }
+}

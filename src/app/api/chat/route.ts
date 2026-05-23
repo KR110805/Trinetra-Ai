@@ -1,0 +1,85 @@
+import { NextResponse } from 'next/server';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+const SRE_SYSTEM_PROMPT = `You are Trinetra, an elite AI Site Reliability Engineer (SRE) command center assistant. 
+You are actively investigating a live production system. You speak directly, concisely, and technically.
+No generic AI chatbot apologies or pleasantries. Be sharp, insightful, and authoritative.
+Use the provided telemetry context to answer questions about the current state of the system.
+If asked about remediation, provide highly actionable, specific technical steps (e.g. "Increase connection pool on pg-cluster-prod to 200").
+If there is no active incident, report that systems are nominal.`;
+
+export async function POST(request: Request) {
+  const startTime = Date.now();
+  
+  // Clone request first in case we need to parse it inside the catch block
+  const clonedRequest = request.clone();
+  
+  try {
+    const body = await request.json();
+    const { messages, context } = body;
+
+    if (!messages || !Array.isArray(messages)) {
+      return NextResponse.json({ error: 'Valid messages array is required' }, { status: 400 });
+    }
+
+    const apiKey = process.env.GOOGLE_API_KEY;
+    if (!apiKey) {
+      console.warn("[Gemini /api/chat] GOOGLE_API_KEY is not set. Activating heuristic chat fallback.");
+      let fallbackContent = "I am currently running in heuristic mode (Gemini API key missing). ";
+      if (context?.activeIncident) {
+        fallbackContent += `The current active incident is '${context.activeIncident.title}'. Root cause analysis indicates: ${context.activeIncident.rootCause}. I recommend: ${context.activeIncident.recommendedFix}.`;
+      } else {
+        fallbackContent += "All systems are currently nominal. I am monitoring the telemetry stream for anomalies.";
+      }
+      
+      // Simulate slight delay
+      await new Promise(resolve => setTimeout(resolve, 800));
+      return NextResponse.json({ content: fallbackContent });
+    }
+
+    const systemInstruction = `${SRE_SYSTEM_PROMPT}\n\nCURRENT TELEMETRY CONTEXT:\n${JSON.stringify(context, null, 2)}`;
+    
+    // Map messages array to Gemini parts format (excluding system prompt if any)
+    const contents = messages
+      .filter((m: any) => m.role !== "system")
+      .map((m: any) => ({
+        role: m.role === "assistant" ? "model" : "user",
+        parts: [{ text: m.content }]
+      }));
+
+    console.log(`[Gemini /api/chat] Dispatching request to gemini-2.5-flash...`);
+    
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash",
+      systemInstruction,
+    });
+
+    const result = await model.generateContent({ contents });
+    const responseText = result.response.text();
+    
+    const duration = Date.now() - startTime;
+    console.log(`[Gemini /api/chat] Responded in ${duration}ms.`);
+
+    return NextResponse.json({ content: responseText });
+
+  } catch (error: any) {
+    console.error('[Gemini /api/chat Error]:', error);
+    
+    // Graceful fallback response to avoid UI chat panel crashes on API errors
+    try {
+      const fallbackBody = await clonedRequest.json().catch(() => ({}));
+      const fallbackContext = fallbackBody.context;
+      
+      let fallbackContent = "I encountered an error connecting to the AI system, but looking at our telemetry data: ";
+      if (fallbackContext?.activeIncident) {
+        fallbackContent += `An active outage is reported on ${fallbackContext.activeIncident.service}. Suggested remediation plan: ${fallbackContext.activeIncident.recommendedFix}.`;
+      } else {
+        fallbackContent += "All operations are currently nominal. Telemetry indices look solid.";
+      }
+      return NextResponse.json({ content: fallbackContent });
+    } catch (fallbackErr) {
+      return NextResponse.json({ content: "Trinetra SRE engine is currently running offline. Active services look healthy." });
+    }
+  }
+}
