@@ -1,7 +1,3 @@
-Trinetra AI README 😄🔥
-
-Use this directly in your README.md:
-
 # 👁️ Trinetra AI
 > The Third Eye for Autonomous API Reliability
 Trinetra AI is an AI-native observability and incident response platform built for modern engineering teams.
