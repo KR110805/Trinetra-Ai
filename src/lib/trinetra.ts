@@ -1,162 +1,102 @@
 /**
  * Trinetra Telemetry SDK
- * Lightweight, hackathon-friendly client for sending frontend performance,
- * errors, custom metrics, and operational events to Trinetra.
+ * 
+ * A lightweight, production-style observability integration for external
+ * applications to stream requests and error telemetry directly into Trinetra.
  */
 
 export interface TrinetraConfig {
-  apiKey: string;
-  projectName: string;
-  environment?: string;
-  endpoint?: string;
+  endpoint: string;
 }
 
-export interface RequestTelemetry {
+export interface RequestPayload {
   route: string;
-  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+  method: string;
   status: number;
-  latency: number; // in milliseconds
-  service: string;
-}
-
-export interface ErrorTelemetry {
-  message: string;
-  stack?: string;
-  severity?: "low" | "medium" | "high" | "critical";
-  route?: string;
+  latency: number;
   service?: string;
 }
 
-export interface MetricTelemetry {
-  name: string;
-  value: number;
-  unit?: string;
-  tags?: Record<string, string>;
-}
-
-export interface EventTelemetry {
-  name: string;
-  description: string;
-  type: "deployment" | "traffic_spike" | "recovery" | "custom";
-  metadata?: Record<string, any>;
-}
-
-export class TrinetraSDK {
-  private config: TrinetraConfig | null = null;
+class TrinetraSDK {
+  private endpoint: string | null = null;
 
   /**
-   * Initializes the Trinetra SDK with your configuration.
+   * Initialize the SDK with configuration options.
+   * @param config TrinetraConfig options
    */
   public init(config: TrinetraConfig): void {
-    this.config = {
-      environment: "production",
-      endpoint: "/api/telemetry",
-      ...config,
-    };
-    
-    if (typeof window !== "undefined") {
-      console.log(`[Trinetra SDK] Initialized for project: ${this.config.projectName}`);
+    if (!config.endpoint) {
+      console.warn("[Trinetra SDK] Initialization failed: 'endpoint' is required.");
+      return;
     }
+    // Normalize endpoint URL by stripping trailing slash
+    this.endpoint = config.endpoint.endsWith('/') ? config.endpoint.slice(0, -1) : config.endpoint;
+    console.log(`[Trinetra SDK] Observability pipeline initialized at ${this.endpoint}`);
   }
 
   /**
-   * Tracks an HTTP request execution.
+   * Log an API request event into the telemetry stream.
+   * @param payload Request details
    */
-  public captureRequest(data: RequestTelemetry): void {
-    this.sendTelemetry("request", {
-      ...data,
-      timestamp: new Date().toISOString(),
-    });
-  }
-
-  /**
-   * Tracks an application exception or error signal.
-   */
-  public captureError(data: ErrorTelemetry): void {
-    this.sendTelemetry("error", {
-      ...data,
-      severity: data.severity || "high",
-      timestamp: new Date().toISOString(),
-    });
-  }
-
-  /**
-   * Captures custom numeric metrics (e.g. system usage, user signup ratios).
-   */
-  public captureMetric(data: MetricTelemetry): void {
-    this.sendTelemetry("metric", {
-      ...data,
-      timestamp: new Date().toISOString(),
-    });
-  }
-
-  /**
-   * Records operational events (e.g. rollouts, automated actions, scale operations).
-   */
-  public captureEvent(data: EventTelemetry): void {
-    this.sendTelemetry("event", {
-      ...data,
-      timestamp: new Date().toISOString(),
-    });
-  }
-
-  /**
-   * Sends telemetry packet to the configured endpoint with automatic backoff retry logic.
-   */
-  private async sendTelemetry(type: string, data: any): Promise<void> {
-    if (!this.config) {
-      if (typeof window !== "undefined") {
-        console.warn("[Trinetra SDK] capture call ignored. SDK not initialized. Call Trinetra.init() first.");
-      }
+  public async captureRequest(payload: RequestPayload): Promise<void> {
+    if (!this.endpoint) {
+      console.warn("[Trinetra SDK] captureRequest ignored: SDK is not initialized. Call Trinetra.init() first.");
       return;
     }
 
-    const payload = {
-      sdkVersion: "1.0.0",
-      apiKey: this.config.apiKey,
-      projectName: this.config.projectName,
-      environment: this.config.environment,
-      type,
-      data,
-    };
+    try {
+      const telemetryBody = {
+        type: "request",
+        timestamp: Date.now(),
+        method: payload.method.toUpperCase(),
+        path: payload.route,
+        statusCode: payload.status,
+        latencyMs: payload.latency,
+        service: payload.service || "external-application"
+      };
 
-    const url = this.config.endpoint || "/api/telemetry";
-    const maxRetries = 3;
-    let attempt = 0;
-    let delay = 1000;
+      await fetch(this.endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(telemetryBody)
+      });
+    } catch (err) {
+      console.error("[Trinetra SDK Error] Failed to capture request telemetry:", err);
+    }
+  }
 
-    const performFetch = async (): Promise<boolean> => {
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${this.config?.apiKey}`,
-            "X-Trinetra-SDK": "true",
-          },
-          body: JSON.stringify(payload),
-        });
-        return response.ok;
-      } catch (error) {
-        return false;
-      }
-    };
+  /**
+   * Log an application error event into the telemetry stream.
+   * @param error JavaScript error object
+   */
+  public async captureError(error: Error): Promise<void> {
+    if (!this.endpoint) {
+      console.warn("[Trinetra SDK] captureError ignored: SDK is not initialized. Call Trinetra.init() first.");
+      return;
+    }
 
-    // Retry loop with simple exponential backoff
-    while (attempt < maxRetries) {
-      const success = await performFetch();
-      if (success) {
-        break;
-      }
-      
-      attempt++;
-      if (attempt < maxRetries) {
-        await new Promise((resolve) => setTimeout(resolve, delay));
-        delay *= 2; // double the delay time
-      }
+    try {
+      const telemetryBody = {
+        type: "error",
+        timestamp: Date.now(),
+        message: error.message || String(error),
+        stack: error.stack || ""
+      };
+
+      await fetch(this.endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(telemetryBody)
+      });
+    } catch (err) {
+      console.error("[Trinetra SDK Error] Failed to capture error telemetry:", err);
     }
   }
 }
 
-// Export singleton instance for direct import/usage
+// Export singleton instance as requested
 export const Trinetra = new TrinetraSDK();
