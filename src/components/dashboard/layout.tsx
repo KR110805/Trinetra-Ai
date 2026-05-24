@@ -1,6 +1,7 @@
 "use client"
 
-import React from "react"
+import React, { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import {
   Activity,
   BarChart3,
@@ -21,20 +22,90 @@ interface DashboardLayoutProps {
 }
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
-  const { metrics, activeIncidentCount, activeTab, setActiveTab, aiConfidenceScore } = useTelemetry()
+  const { metrics, activeIncidentCount, activeTab, setActiveTab } = useTelemetry()
 
   const isHealthy = metrics.systemHealth > 90
 
+  const [showIntro, setShowIntro] = useState(true)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    const hasSeen = sessionStorage.getItem("trinetra-intro-seen")
+    if (hasSeen) {
+      setShowIntro(false)
+    } else {
+      sessionStorage.setItem("trinetra-intro-seen", "true")
+      const timer = setTimeout(() => setShowIntro(false), 1200)
+      return () => clearTimeout(timer)
+    }
+  }, [])
+
+  if (!mounted) return <div className="h-screen w-full bg-[#050507]" />
+
   return (
     <div className="flex h-screen w-full bg-[#050507] overflow-hidden text-sm selection:bg-white selection:text-black">
+      <AnimatePresence>
+        {showIntro && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-[#050507] flex flex-col items-center justify-center pointer-events-none"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.8, ease: "easeInOut" } }}
+          >
+            <motion.div 
+              className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_0%,transparent_40%)]"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+            />
+            
+            <div className="flex items-center gap-4 z-10">
+              <motion.div 
+                layoutId="brand-logo"
+                className="w-14 h-14 flex items-center justify-center relative rounded-xl overflow-hidden shadow-[0_0_30px_rgba(255,255,255,0.05)]"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
+                <img src="/Logo.png" alt="Trinetra Logo" className="w-full h-full object-contain" />
+              </motion.div>
+              <motion.span 
+                layoutId="brand-text"
+                className="font-semibold tracking-tight text-white text-3xl uppercase tracking-widest font-mono"
+                initial={{ opacity: 0, x: -10, filter: "blur(4px)" }}
+                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              >
+                Trinetra AI
+              </motion.span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* LEFT SIDEBAR */}
-      <aside className="w-56 flex flex-col hidden md:flex border-r border-white/[0.03] bg-[#070709] relative z-20">
+      <motion.aside 
+        className="w-56 flex flex-col hidden md:flex border-r border-white/[0.03] bg-[#070709] relative z-20"
+        initial={showIntro ? { opacity: 0 } : false}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: showIntro ? 0.4 : 0 }}
+      >
         <div className="h-16 flex items-center px-6 border-b border-white/[0.03]">
           <div className="flex items-center gap-3 text-white font-medium tracking-tight cursor-pointer" onClick={() => setActiveTab("overview")}>
-            <div className="w-6 h-6 flex items-center justify-center relative rounded overflow-hidden">
+            <motion.div 
+              layoutId="brand-logo" 
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="w-6 h-6 flex items-center justify-center relative rounded overflow-hidden"
+            >
               <img src="/Logo.png" alt="Trinetra Logo" className="w-full h-full object-contain" />
-            </div>
-            <span className="font-semibold tracking-tight text-white text-xs uppercase tracking-wider font-mono">Trinetra AI</span>
+            </motion.div>
+            <motion.span 
+              layoutId="brand-text" 
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="font-semibold tracking-tight text-white text-xs uppercase tracking-wider font-mono"
+            >
+              Trinetra AI
+            </motion.span>
           </div>
         </div>
 
@@ -87,10 +158,15 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             onClick={() => setActiveTab("settings")} 
           />
         </div>
-      </aside>
+      </motion.aside>
 
       {/* MAIN CONTENT AREA */}
-      <div className="flex-1 flex flex-col h-full relative z-10 bg-[#050507]">
+      <motion.div 
+        className="flex-1 flex flex-col h-full relative z-10 bg-[#050507]"
+        initial={showIntro ? { opacity: 0, filter: "blur(8px)" } : false}
+        animate={{ opacity: 1, filter: "blur(0px)" }}
+        transition={{ duration: 0.8, delay: showIntro ? 0.6 : 0, ease: "easeOut" }}
+      >
         {/* TOPBAR */}
         <header className="h-14 flex items-center justify-between px-6 border-b border-white/[0.03] bg-[#070709]/60 backdrop-blur-md">
           <div className="flex items-center gap-3.5 flex-1">
@@ -139,7 +215,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             {children}
           </div>
         </main>
-      </div>
+      </motion.div>
     </div>
   )
 }
