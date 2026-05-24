@@ -14,6 +14,7 @@ import { LiveLogsPanel } from "@/components/dashboard/live-logs"
 import { IncidentTimeline } from "@/components/dashboard/incident-timeline"
 import { AskTrinetraPanel } from "@/components/dashboard/ask-trinetra"
 import { SettingsView } from "@/components/dashboard/settings-view"
+import { ConnectedApplications } from "@/components/dashboard/connected-applications"
 import { CheckCircle2, AlertTriangle, ShieldCheck, Play, Loader2 } from "lucide-react"
 
 function formatTimeAgo(date: Date): string {
@@ -78,6 +79,9 @@ function DashboardPageContent() {
             <h3 className="text-xs font-semibold font-mono tracking-wider text-zinc-500 uppercase">Core Telemetry Metrics</h3>
             <HeroMetrics />
           </div>
+
+          {/* Connected Applications Module */}
+          <ConnectedApplications />
 
           {/* PROGRESSIVE REVEAL BLOCK */}
           {hasActiveIncident ? (

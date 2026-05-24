@@ -64,6 +64,9 @@ interface TelemetryContextValue {
 
   // Telemetry pipeline ingestion
   addExternalTelemetry: (log: any) => void
+
+  // Connected Applications
+  connectedApps: any[]
 }
 
 const TelemetryContext = createContext<TelemetryContextValue | null>(null)
@@ -94,6 +97,21 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
   const [showStabilizationBanner, setShowStabilizationBanner] = useState<boolean>(false)
 
   const [activeTab, setActiveTab] = useState<string>("overview")
+
+  // Connected Applications State
+  const [connectedApps, setConnectedApps] = useState<Record<string, any>>({
+    "Nagrik AI": {
+      name: "Nagrik AI",
+      requests: 42,
+      avgLatency: 320,
+      status: "healthy",
+      lastActive: new Date(),
+      totalLatency: 42 * 320,
+      errorCount5xx: 0,
+      consecutive5xx: 0,
+      message: "Streaming telemetry • nominal"
+    }
+  })
 
   // Keep a mutable ref to logs for the ticker so we don't close over stale state
   const logsRef = useRef<TelemetryLog[]>([])
@@ -336,6 +354,76 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const addExternalTelemetry = useCallback((sdkLog: any) => {
+    // Extract project name
+    const projectName = sdkLog.projectName || sdkLog.data?.projectName || "External Application"
+    const serviceName = sdkLog.data?.service || sdkLog.service || "external-service"
+
+    // Update Connected Applications list dynamically
+    if (sdkLog.type === "request" || sdkLog.type === "error" || sdkLog.type === undefined) {
+      setConnectedApps(prev => {
+        const app = prev[projectName] || {
+          name: projectName,
+          requests: 0,
+          avgLatency: 0,
+          status: "healthy",
+          lastActive: new Date(),
+          totalLatency: 0,
+          errorCount5xx: 0,
+          consecutive5xx: 0,
+          message: "Streaming telemetry • nominal"
+        }
+
+        const newRequests = app.requests + 1
+        
+        let latency = 0
+        let is5xx = false
+
+        if (sdkLog.type === "error") {
+          is5xx = true
+        } else {
+          latency = Number(sdkLog.data?.latency || sdkLog.data?.latencyMs || sdkLog.latencyMs || 0)
+          const statusCode = Number(sdkLog.data?.status || sdkLog.data?.statusCode || sdkLog.statusCode || 200)
+          if (statusCode >= 500) {
+            is5xx = true
+          }
+        }
+
+        const newTotalLatency = app.totalLatency + latency
+        const newAvgLatency = Math.round(newTotalLatency / newRequests)
+        const newConsecutive5xx = is5xx ? app.consecutive5xx + 1 : 0
+        
+        // Status Detection:
+        // - repeated 5xx errors (consecutive5xx >= 3) -> critical
+        // - high latency (latency > 500ms or newAvgLatency > 350ms) -> degraded
+        // - otherwise healthy
+        let newStatus: "healthy" | "degraded" | "critical" = "healthy"
+        let msg = "Streaming telemetry • nominal"
+
+        if (newConsecutive5xx >= 3) {
+          newStatus = "critical"
+          msg = `${serviceName} Incident Active`
+        } else if (latency > 500 || newAvgLatency > 350) {
+          newStatus = "degraded"
+          msg = "Latency Elevated"
+        }
+
+        return {
+          ...prev,
+          [projectName]: {
+            ...app,
+            requests: newRequests,
+            avgLatency: newAvgLatency,
+            status: newStatus,
+            lastActive: new Date(),
+            totalLatency: newTotalLatency,
+            errorCount5xx: is5xx ? app.errorCount5xx + 1 : app.errorCount5xx,
+            consecutive5xx: newConsecutive5xx,
+            message: msg
+          }
+        }
+      })
+    }
+
     if (sdkLog.type === "event") {
       const eventData = sdkLog.data || {}
       setTimelineEvents(prev => [{
@@ -1033,7 +1121,10 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
         setActiveTab,
 
         // SDK Integration
-        addExternalTelemetry
+        addExternalTelemetry,
+
+        // Connected Applications
+        connectedApps: Object.values(connectedApps)
       }}
     >
       {children}

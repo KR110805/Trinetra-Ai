@@ -1,36 +1,26 @@
 /**
- * Trinetra Telemetry SDK
+ * Trinetra Telemetry SDK (Javascript version)
  * 
  * A lightweight, production-style observability integration for external
  * applications to stream requests and error telemetry directly into Trinetra.
  */
 
-export interface TrinetraConfig {
-  endpoint: string;
-  projectName?: string;
-  apiKey?: string;
-}
-
-export interface RequestPayload {
-  route: string;
-  method: string;
-  status: number;
-  latency: number;
-  service?: string;
-  projectName?: string;
-}
-
 class TrinetraSDK {
-  private endpoint: string | null = null;
-  private projectName: string = "Trinetra Dashboard";
-  private apiKey: string = "trinetra-dev-key";
+  constructor() {
+    this.endpoint = null;
+    this.projectName = "Trinetra Dashboard";
+    this.apiKey = "trinetra-dev-key";
+  }
 
   /**
    * Initialize the SDK with configuration options.
-   * @param config TrinetraConfig options
+   * @param {Object} config TrinetraConfig options
+   * @param {string} config.endpoint Ingestion endpoint
+   * @param {string} [config.projectName] Project name
+   * @param {string} [config.apiKey] API key
    */
-  public init(config: TrinetraConfig): void {
-    if (!config.endpoint) {
+  init(config) {
+    if (!config || !config.endpoint) {
       console.warn("[Trinetra SDK] Initialization failed: 'endpoint' is required.");
       return;
     }
@@ -49,9 +39,15 @@ class TrinetraSDK {
 
   /**
    * Log an API request event into the telemetry stream.
-   * @param payload Request details
+   * @param {Object} payload Request details
+   * @param {string} payload.route
+   * @param {string} payload.method
+   * @param {number} payload.status
+   * @param {number} payload.latency
+   * @param {string} [payload.service]
+   * @param {string} [payload.projectName]
    */
-  public async captureRequest(payload: RequestPayload): Promise<void> {
+  async captureRequest(payload) {
     if (!this.endpoint) {
       console.warn("[Trinetra SDK] captureRequest ignored: SDK is not initialized. Call Trinetra.init() first.");
       return;
@@ -66,7 +62,7 @@ class TrinetraSDK {
         data: {
           type: "request",
           timestamp: Date.now(),
-          method: payload.method.toUpperCase(),
+          method: (payload.method || "GET").toUpperCase(),
           path: payload.route,
           statusCode: payload.status,
           latencyMs: payload.latency,
@@ -88,9 +84,9 @@ class TrinetraSDK {
 
   /**
    * Log an application error event into the telemetry stream.
-   * @param error JavaScript error object
+   * @param {Error|Object} error JavaScript error object
    */
-  public async captureError(error: Error): Promise<void> {
+  async captureError(error) {
     if (!this.endpoint) {
       console.warn("[Trinetra SDK] captureError ignored: SDK is not initialized. Call Trinetra.init() first.");
       return;
