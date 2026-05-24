@@ -9,6 +9,19 @@ if (!globalForTelemetry.telemetryQueue) {
   globalForTelemetry.telemetryQueue = [];
 }
 
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 200,
+    headers: CORS_HEADERS,
+  });
+}
+
 export async function POST(request: Request) {
   try {
     const payload = await request.json();
@@ -18,7 +31,7 @@ export async function POST(request: Request) {
     if (!apiKey || !projectName || !type || !data) {
       return NextResponse.json(
         { error: "Invalid telemetry payload structure. Missing required fields." },
-        { status: 400 }
+        { status: 400, headers: CORS_HEADERS }
       );
     }
 
@@ -34,17 +47,20 @@ export async function POST(request: Request) {
     console.log(`\x1b[32m[Trinetra Ingestion]\x1b[0m Received \x1b[36m${type.toUpperCase()}\x1b[0m telemetry packet from project: \x1b[35m${projectName}\x1b[0m`);
     console.log(JSON.stringify(data, null, 2));
 
-    return NextResponse.json({
-      status: "success",
-      message: "Telemetry packet queued successfully",
-      packetId: `${Date.now()}-${Math.random().toString(36).substring(7)}`,
-    });
+    return NextResponse.json(
+      {
+        status: "success",
+        message: "Telemetry packet queued successfully",
+        packetId: `${Date.now()}-${Math.random().toString(36).substring(7)}`,
+      },
+      { headers: CORS_HEADERS }
+    );
 
   } catch (error: any) {
     console.error("[Trinetra Ingestion Error]:", error);
     return NextResponse.json(
       { error: error.message || "Failed to process telemetry ingestion" },
-      { status: 500 }
+      { status: 500, headers: CORS_HEADERS }
     );
   }
 }
