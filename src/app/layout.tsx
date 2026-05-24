@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import { Trinetra } from "@/lib/trinetra";
+
+// Initialize Trinetra Telemetry SDK
+Trinetra.init({
+  endpoint: "https://trinetra-ai-ten.vercel.app/api/telemetry"
+});
 
 const dmSans = DM_Sans({
   subsets: ["latin"],

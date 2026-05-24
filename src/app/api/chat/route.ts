@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { Trinetra } from '@/lib/trinetra';
 
 const SRE_SYSTEM_PROMPT = `You are Trinetra, an elite AI Site Reliability Engineer (SRE) command center assistant. 
 You are actively investigating a live production system. You speak directly, concisely, and technically.
@@ -34,6 +35,16 @@ export async function POST(request: Request) {
       
       // Simulate slight delay
       await new Promise(resolve => setTimeout(resolve, 800));
+
+      // Capture successful telemetry response
+      Trinetra.captureRequest({
+        route: "/chat",
+        method: "POST",
+        status: 200,
+        latency: Date.now() - startTime,
+        service: "gemini"
+      });
+
       return NextResponse.json({ content: fallbackContent });
     }
 
@@ -61,11 +72,30 @@ export async function POST(request: Request) {
     const duration = Date.now() - startTime;
     console.log(`[Gemini /api/chat] Responded in ${duration}ms.`);
 
+    // Capture successful telemetry request
+    Trinetra.captureRequest({
+      route: "/chat",
+      method: "POST",
+      status: 200,
+      latency: Date.now() - startTime,
+      service: "gemini"
+    });
+
     return NextResponse.json({ content: responseText });
 
   } catch (error: any) {
     console.error('[Gemini /api/chat Error]:', error);
     
+    // Capture error and failed request telemetry
+    Trinetra.captureError(error as Error);
+    Trinetra.captureRequest({
+      route: "/chat",
+      method: "POST",
+      status: 500,
+      latency: Date.now() - startTime,
+      service: "gemini"
+    });
+
     // Graceful fallback response to avoid UI chat panel crashes on API errors
     try {
       const fallbackBody = await clonedRequest.json().catch(() => ({}));
@@ -73,7 +103,7 @@ export async function POST(request: Request) {
       
       let fallbackContent = "I encountered an error connecting to the AI system, but looking at our telemetry data: ";
       if (fallbackContext?.activeIncident) {
-        fallbackContent += `An active outage is reported on ${fallbackContext.activeIncident.service}. Suggested remediation plan: ${fallbackContext.activeIncident.recommendedFix}.`;
+        fallbackContent += `An active outage is reported on ${fallbackContext.service || 'payment-service'}. Suggested remediation plan: ${fallbackContext.recommendedFix || 'Increase pg-cluster-prod DB connection pool size'}.`;
       } else {
         fallbackContent += "All operations are currently nominal. Telemetry indices look solid.";
       }
