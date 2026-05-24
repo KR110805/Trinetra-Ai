@@ -1,172 +1,372 @@
-# 👁️ Trinetra AI
-> The Third Eye for Autonomous API Reliability
-Trinetra AI is an AI-native observability and incident response platform built for modern engineering teams.
-It continuously:
-- monitors APIs
-- analyzes telemetry
-- detects anomalies
-- explains outages using AI
-- recommends remediation workflows
-- stabilizes infrastructure
-Built during the AI Hackathon for Builders 🚀
----
-# ✨ Features
-## 🔥 Real-Time Telemetry Monitoring
-- Live API request tracking
-- Latency monitoring
-- Error detection
-- Traffic spike analysis
-- Operational health metrics
-## 🧠 AI-Powered Incident Analysis
-Trinetra uses Google Gemini AI to:
-- identify root causes
-- summarize incidents
-- explain outages
-- recommend recovery actions
-- provide contextual SRE reasoning
-## 🚨 Autonomous Incident Detection
-Detects:
-- 5xx failure spikes
-- latency degradation
-- authentication storms
-- database exhaustion
-- OpenAI/Gemini degradation
-## 🔌 Lightweight Telemetry SDK
-External applications can stream telemetry into Trinetra using the built-in SDK.
-Example:
-```ts
-Trinetra.captureRequest({
-  route: "/chat",
-  method: "POST",
-  status: 500,
-  latency: 4200,
-})
+👁️ Trinetra AI
 
-🛠 AI Recovery Action Center
-
-Operational remediation workflows:
-
-* restart services
-* enable fallback providers
-* scale infrastructure
-* stabilize traffic
-
-💬 Ask Trinetra
-
-An AI SRE copilot for conversational debugging and operational insights.
+The Third Eye for Autonomous Reliability Engineering
+AI-native observability, incident detection, and intelligent recovery workflows for modern applications.
 
 ⸻
 
-🏗 Architecture
+🌌 Overview
 
-Demo App
-   ↓
+Trinetra AI is a modern AI-powered observability and SRE (Site Reliability Engineering) platform built to monitor applications in real time, detect failures autonomously, explain incidents using AI, and guide teams through recovery workflows.
+
+Unlike traditional dashboards that only show metrics, Trinetra actively reasons about telemetry streams and converts operational noise into actionable intelligence.
+
+Built during the AI Hackathon for Builders 2026 🚀
+
+⸻
+
+✨ Core Features
+
+🔌 External Telemetry SDK
+
+Connect any application to Trinetra in minutes.
+
+Applications can stream:
+
+* API requests
+* latency metrics
+* errors
+* operational events
+
+directly into the observability engine.
+
+Supported Integrations
+
+* AI chat applications
+* SaaS platforms
+* internal tools
+* API services
+* LLM-powered applications
+
+⸻
+
+📡 Real-Time Observability
+
+Trinetra continuously monitors:
+
+* request throughput
+* response latency
+* system health
+* service degradation
+* anomaly spikes
+* application failures
+
+All updates occur live inside the dashboard.
+
+⸻
+
+🧠 AI Incident Analysis
+
+Powered by Google Gemini AI.
+
+Trinetra can:
+
+* explain outages
+* identify probable root causes
+* summarize incidents
+* simplify technical failures
+* provide recovery guidance
+
+⸻
+
+🚨 Autonomous Incident Detection
+
+Detects:
+
+* latency spikes
+* repeated 5xx failures
+* degraded AI provider responses
+* backend instability
+* service health degradation
+
+Incident states:
+
+investigating → identified → monitoring → resolved
+
+⸻
+
+💬 Ask Trinetra (AI Copilot)
+
+An AI-native operational assistant that:
+
+* explains failures
+* answers telemetry questions
+* simplifies engineering concepts
+* recommends remediation actions
+
+Built with a conversational, human-first experience inspired by ChatGPT.
+
+⸻
+
+🛠 Recovery Workflow Engine
+
+Simulated AI remediation workflows:
+
+* request queuing
+* retry orchestration
+* fallback provider activation
+* infrastructure stabilization
+* service recovery tracking
+
+⸻
+
+🌐 Connected Applications
+
+Trinetra tracks applications actively streaming telemetry.
+
+Example:
+
+* Nagrik AI
+* AI inference services
+* internal APIs
+* backend gateways
+
+Each application includes:
+
+* health status
+* live latency
+* request volume
+* operational condition
+
+⸻
+
+🏗 System Architecture
+
+External Application
+        ↓
 Trinetra SDK
-   ↓
-/api/telemetry
-   ↓
+        ↓
+Telemetry API
+        ↓
 Telemetry Store
-   ↓
+        ↓
 Incident Detection Engine
-   ↓
+        ↓
 Gemini AI Analysis
-   ↓
-Dashboard + Recovery Workflows
+        ↓
+Realtime Dashboard
+        ↓
+Recovery Workflows
 
 ⸻
 
 ⚡ Tech Stack
 
+Frontend
+
 * Next.js 15
 * TypeScript
 * Tailwind CSS v4
-* Google Gemini API
+* Framer Motion
 * Recharts
-* Lucide Icons
+
+AI
+
+* Google Gemini API
+* Gemini 1.5 Flash
+
+Observability
+
+* Custom telemetry ingestion engine
+* Realtime polling architecture
+* Incident detection engine
+* AI reasoning pipeline
+
+Deployment
+
 * Vercel
 
 ⸻
 
-🎯 Demo Scenarios
+🎨 Design Philosophy
 
-Trinetra includes guided failure simulations:
+Trinetra follows a:
 
-* OpenAI API Meltdown
-* Database Exhaustion
-* Traffic Surge Cascade
-* Authentication Failure Storm
+* monochrome minimal UI
+* Apple-inspired visual system
+* calm operational interface
+* premium enterprise aesthetic
 
-Each scenario triggers:
+Inspired by:
 
-* telemetry degradation
-* incident escalation
-* AI analysis
-* recovery workflows
+* ChatGPT
+* Linear
+* Vercel
+* Stripe
+* Apple
 
 ⸻
 
-🚀 Local Setup
+🔌 SDK Integration
 
-1. Clone Repository
+Step 1 — Include SDK
+
+<script src="/js/trinetra.js"></script>
+
+⸻
+
+Step 2 — Initialize SDK
+
+Trinetra.init({
+  endpoint: "https://trinetra-ai-ten.vercel.app/api/telemetry",
+  projectName: "Nagrik AI"
+})
+
+⸻
+
+Step 3 — Track Requests
+
+Trinetra.captureRequest({
+  route: "/chat",
+  method: "POST",
+  status: 200,
+  latency: 320,
+  service: "gemini"
+})
+
+⸻
+
+Step 4 — Track Errors
+
+Trinetra.captureError(error)
+
+⸻
+
+📊 Example Telemetry Packet
+
+{
+  "projectName": "Nagrik AI",
+  "type": "request",
+  "route": "/chat",
+  "method": "POST",
+  "status": 200,
+  "latency": 320,
+  "service": "gemini",
+  "timestamp": 1716540000000
+}
+
+⸻
+
+🚀 Local Development
+
+Clone Repository
 
 git clone https://github.com/YOUR_USERNAME/trinetra-ai.git
 cd trinetra-ai
 
-2. Install Dependencies
+⸻
+
+Install Dependencies
 
 npm install
 
-3. Configure Environment Variables
+⸻
 
-Create .env.local
+Configure Environment Variables
+
+Create:
+
+.env.local
+
+Add:
 
 GOOGLE_API_KEY=your_google_api_key
 
-4. Start Development Server
+⸻
+
+Start Development Server
 
 npm run dev
 
 ⸻
 
-🧪 Demo Flow
+🌍 Live Deployment
 
-1. Launch Trinetra Dashboard
-2. Trigger a failure scenario
-3. Observe telemetry degradation
-4. Watch AI incident analysis activate
-5. Execute remediation workflows
-6. Stabilize production environment
+Trinetra AI Dashboard
+
+Live Platform￼
 
 ⸻
 
-🔒 Fail-Safe AI Architecture
+Connected Demo Application
+
+Nagrik AI Demo App￼
+
+⸻
+
+🧪 Demo Flow
+
+1. Healthy System
+
+Dashboard opens in a stable operational state.
+
+⸻
+
+2. External Traffic
+
+Nagrik AI streams telemetry into Trinetra.
+
+⸻
+
+3. Incident Detection
+
+Failures or latency spikes trigger operational incidents.
+
+⸻
+
+4. AI Reasoning
+
+Gemini analyzes telemetry and explains root causes.
+
+⸻
+
+5. Conversational Debugging
+
+Users interact with Ask Trinetra for operational guidance.
+
+⸻
+
+6. Recovery Workflow
+
+AI remediation actions stabilize the system.
+
+⸻
+
+🔒 Reliability & Fallback Design
 
 Trinetra includes deterministic fallback systems.
 
 If:
 
 * Gemini API fails
+* API key missing
+* network unavailable
 * rate limits occur
-* network becomes unavailable
 
-The platform automatically switches to heuristic SRE reasoning to ensure demo reliability.
+the platform automatically switches to heuristic operational reasoning to preserve demo reliability.
 
 ⸻
 
 🌌 Vision
 
-Modern observability tools detect incidents.
+Traditional observability tools surface alerts.
 
-Trinetra goes further:
+Trinetra goes further.
 
-* reasoning
-* diagnosis
-* operational guidance
-* AI-assisted recovery
+It interprets telemetry, reasons about failures, explains incidents in human language, and guides operational recovery using AI-native workflows.
 
-The goal is to build the future of autonomous reliability engineering.
+The long-term vision:
+
+Build the future operating system for autonomous reliability engineering.
 
 ⸻
 
 👨‍💻 Author
+
 Kshitij Renge
+
+⸻
+
+📜 License
+
+MIT License
