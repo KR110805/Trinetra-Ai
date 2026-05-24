@@ -1,6 +1,6 @@
 "use client"
 
-import { Activity, Clock, Server, Zap } from "lucide-react"
+import { Activity, Clock, Server } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { useTelemetry } from "@/lib/telemetry-store"
 
@@ -15,13 +15,6 @@ export function HeroMetrics() {
       trend: metrics.systemHealth >= metrics.prevSystemHealth ? "up" : "down",
       icon: <Activity className="w-3.5 h-3.5 text-zinc-400" />,
       critical: metrics.systemHealth < 90,
-    },
-    {
-      title: "API Requests/min",
-      value: metrics.requestsPerMin.toLocaleString(),
-      change: `${(metrics.requestsPerMin - metrics.prevRequestsPerMin) >= 0 ? '+' : ''}${((metrics.requestsPerMin - metrics.prevRequestsPerMin) / Math.max(metrics.prevRequestsPerMin, 1) * 100).toFixed(1)}%`,
-      trend: metrics.requestsPerMin >= metrics.prevRequestsPerMin ? "up" : "down",
-      icon: <Zap className="w-3.5 h-3.5 text-zinc-400" />,
     },
     {
       title: "Avg Latency",
@@ -43,7 +36,7 @@ export function HeroMetrics() {
   ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       {cards.map((card, i) => {
         const isGood =
           (card.isErrorMetric && card.trend === "down") ||
@@ -53,15 +46,15 @@ export function HeroMetrics() {
         return (
           <Card
             key={i}
-            className={`bg-[#09090B] border shadow-[0_1px_3px_rgba(0,0,0,0.6)] rounded-lg transition-all duration-300 ${
+            className={`bg-[#09090B] border shadow-[0_1px_2px_rgba(0,0,0,0.6)] rounded-lg transition-all duration-300 ${
               card.critical
                 ? "border-red-500/10 shadow-[0_0_10px_rgba(239,68,68,0.02)]"
-                : "border-white/[0.04] hover:border-white/[0.08]"
+                : "border-white/[0.03] hover:border-white/[0.06]"
             }`}
           >
             <CardContent className="p-5">
-              <div className="flex items-center justify-between mb-3.5">
-                <span className="text-[10px] font-mono font-semibold text-zinc-500 uppercase tracking-wider">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[9px] font-mono font-semibold text-zinc-500 uppercase tracking-wider">
                   {card.title}
                 </span>
                 <span className="text-zinc-650">
@@ -75,7 +68,7 @@ export function HeroMetrics() {
                 </h2>
               </div>
 
-              <div className="mt-2.5 flex items-center gap-1.5 text-[9px] font-mono">
+              <div className="mt-2 flex items-center gap-1.5 text-[9px] font-mono">
                 <span className={`font-semibold ${isGood ? "text-zinc-400" : card.critical ? "text-red-400" : "text-amber-500"}`}>
                   {card.change}
                 </span>
