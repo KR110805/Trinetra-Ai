@@ -548,10 +548,10 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
         return "Set up automated routing failover to secondary model endpoints, implement Redis prompt-response caches (5m TTL), and enable gateway circuit breakers."
       }
       if (query.includes("recovery") || query.includes("actions")) {
-        return "Remediation deployed: redirected completion paths to Anthropic fallback endpoints. Latency recovered to 640ms baseline."
+        return "Remediation deployed: redirected completion paths to fallback endpoints. Latency recovered to 640ms baseline."
       }
       if (query.includes("latency")) {
-        return "Upstream completions sockets hung due to OpenAI capacity limits, causing the proxy client to block for 30s before timeout."
+        return "Upstream completions sockets hung due to AI provider capacity limits, causing the proxy client to block for 30s before timeout."
       }
     }
 
@@ -702,13 +702,13 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
 
     if (scenario === "openai_meltdown") {
       failureType = "openai"
-      title = "OpenAI API Service Degradation"
-      description = "Critical: Upstream error rate spike (429/503) detected on openai-proxy. Latency exceeded 15s."
-      serviceName = "openai-proxy"
+      title = "AI Provider API Degradation"
+      description = "Critical: Upstream error rate spike (429/503) detected on llm-gateway. Latency exceeded 15s."
+      serviceName = "llm-gateway"
       routePath = "/api/v2/generate/completion"
       severity = "critical"
       confidence = 96
-      recommendedFix = "Activate Anthropic Claude Fallback Provider"
+      recommendedFix = "Activate Upstream AI Fallback Provider"
     } else if (scenario === "database_exhaustion") {
       failureType = "database"
       title = "Database Connection Pool Exhaustion"
@@ -764,8 +764,8 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
           path: "/api/v2/generate/completion",
           statusCode: 429,
           latencyMs: 12500 + Math.floor(Math.random() * 2000),
-          service: "openai-proxy",
-          error: "OpenAI API: 429 Rate limit exceeded",
+          service: "llm-gateway",
+          error: "AI Provider API: 429 Rate limit exceeded",
         })
       }
     } else if (scenario === "database_exhaustion") {
@@ -839,11 +839,11 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
           id: "act-openai-1",
           incidentId,
           actionKey: "openai_fallback",
-          title: "Activate Anthropic Claude Fallback Provider",
-          description: "Reroute completion calls to backup Claude API servers.",
+          title: "Activate Upstream AI Fallback Provider",
+          description: "Reroute completion calls to backup model API servers.",
           status: "recommended",
           progress: 0,
-          command: "curl -X POST https://api.trinetra.internal/v1/proxy/switch-provider -d '{\"provider\": \"anthropic\"}'",
+          command: "curl -X POST https://api.trinetra.internal/v1/proxy/switch-provider -d '{\"provider\": \"fallback-model\"}'",
           logs: []
         },
         {
@@ -854,18 +854,18 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
           description: "Immediately reject model proxy requests to prevent pool blockages.",
           status: "recommended",
           progress: 0,
-          command: "consul kv put config/openai-proxy/circuit-breaker/state open",
+          command: "consul kv put config/llm-gateway/circuit-breaker/state open",
           logs: []
         },
         {
           id: "act-openai-3",
           incidentId,
           actionKey: "openai_queue",
-          title: "Scale Completions Queue Workers",
-          description: "Deploy 5 extra consumer replicas to absorb upstream rate queue backlogs.",
+          title: "Scale LLM Gateway Queue Workers",
+          description: "Deploy 5 extra consumer replicas to absorb upstream inference rate queue backlogs.",
           status: "recommended",
           progress: 0,
-          command: "kubectl scale deployment openai-queue-consumer --replicas=5",
+          command: "kubectl scale deployment llm-gateway-queue-consumer --replicas=5",
           logs: []
         }
       ]

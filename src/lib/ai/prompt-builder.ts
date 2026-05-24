@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------------
 // Trinetra AI – Prompt Builder
-// Constructs structured OpenAI prompts from incident summaries.
+// Constructs structured LLM prompts from incident summaries.
 // Uses incident-type–aware reasoning for tailored analysis.
 // ---------------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ RULES:
 const TYPE_CONTEXT: Record<string, string> = {
   database_exhaustion: `This is a DATABASE incident. Think about: connection pool sizing, long-running queries locking connections, ORM connection leaks, PgBouncer configuration, replica lag causing retry storms, max_connections in postgresql.conf.`,
 
-  upstream_provider_degradation: `This is an UPSTREAM PROVIDER incident (OpenAI API). Think about: rate limiting (429s), provider outages, timeout configuration, retry policies with exponential backoff, fallback models (e.g., switching to a cheaper/faster model), request queuing, circuit breaker patterns.`,
+  upstream_provider_degradation: `This is an UPSTREAM PROVIDER incident (Upstream AI/LLM Provider). Think about: rate limiting (429s), provider outages, timeout configuration, retry policies with exponential backoff, fallback models (e.g., switching to a cheaper/faster model), request queuing, circuit breaker patterns.`,
 
   latency_anomaly: `This is a LATENCY incident. Think about: garbage collection pauses, CPU throttling in Kubernetes, noisy neighbor issues, slow downstream dependencies, connection pool wait times, missing database indexes, N+1 query patterns.`,
 
@@ -32,7 +32,7 @@ const TYPE_CONTEXT: Record<string, string> = {
 }
 
 /**
- * Build the messages array for the OpenAI Chat Completion API.
+ * Build the messages array for the Chat Completion API.
  */
 export function buildPrompt(summary: IncidentSummary): { role: string; content: string }[] {
   const typeContext = TYPE_CONTEXT[summary.incidentType] || TYPE_CONTEXT.general_anomaly

@@ -36,7 +36,7 @@ export function ExecutiveSummary() {
       return {
         status: "UPSTREAM AI PROVIDER OUTAGE",
         impact: "AI completion endpoints timing out; model gateway rate limits triggering (429).",
-        affected: "openai-proxy ➔ model-provider-node",
+        affected: "llm-gateway ➔ upstream-inference-node",
         eta: "Immediate on fallback route switch",
         revenueRisk: "AI autocomplete rate limits (120 users impacted/min)",
         severityColor: "text-amber-400 border-amber-500/10 bg-amber-500/5 animate-pulse",

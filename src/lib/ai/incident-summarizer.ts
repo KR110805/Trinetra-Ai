@@ -22,8 +22,13 @@ export function summarizeIncident(
   const windowLogs = recentLogs.filter(l => now - l.timestamp.getTime() < windowMs)
 
   // Filter logs relevant to this incident
+  const isAiService = (service: string) => {
+    const s = service.toLowerCase()
+    return s.includes("openai") || s.includes("gemini") || s.includes("ai-") || s.includes("llm") || s.includes("inference")
+  }
+
   const relevantLogs = windowLogs.filter(l => {
-    if (incident.service === "openai-proxy") return l.service === "openai-proxy"
+    if (isAiService(incident.service)) return isAiService(l.service)
     if (incident.title.includes("Database")) {
       return l.service === "payment-service" || l.service === "order-service" || l.service === "user-service"
     }
@@ -84,7 +89,7 @@ export function summarizeIncident(
 
 function classifyIncidentType(incident: Incident): string {
   if (incident.title.includes("Database") || incident.title.includes("Connection Pool")) return "database_exhaustion"
-  if (incident.title.includes("OpenAI")) return "upstream_provider_degradation"
+  if (incident.title.includes("OpenAI") || incident.title.includes("Gemini") || incident.title.includes("AI Provider") || incident.title.includes("Inference")) return "upstream_provider_degradation"
   if (incident.title.includes("Latency")) return "latency_anomaly"
   if (incident.title.includes("5xx")) return "server_error_spike"
   if (incident.title.includes("auth") || incident.title.includes("Auth") || incident.title.includes("Failures")) return "authentication_failure"

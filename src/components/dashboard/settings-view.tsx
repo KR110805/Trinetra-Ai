@@ -10,9 +10,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 const demoScenarios: { id: DemoScenarioKey; label: string; icon: React.ReactNode; description: string }[] = [
   { 
     id: "openai_meltdown", 
-    label: "OpenAI API Meltdown",  
+    label: "Upstream Inference Outage",  
     icon: <Bot className="w-4 h-4" />,      
-    description: "Simulates upstream OpenAI capacity limits (HTTP 429) causing sockets to hang for 30s before dropping with 503."
+    description: "Simulates upstream AI inference capacity limits (HTTP 429) causing gateway sockets to hang for 30s before dropping with 503."
   },
   { 
     id: "database_exhaustion", 

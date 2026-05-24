@@ -10,7 +10,7 @@ const ROUTES = [
   { path: "/api/v1/users",               method: "GET"    as const, service: "user-service",    baseLatency: 25,  weight: 20 },
   { path: "/api/v1/users",               method: "POST"   as const, service: "user-service",    baseLatency: 45,  weight: 8 },
   { path: "/api/v1/checkout/process",     method: "POST"   as const, service: "payment-service", baseLatency: 120, weight: 12 },
-  { path: "/api/v2/generate/completion",  method: "POST"   as const, service: "openai-proxy",    baseLatency: 800, weight: 15 },
+  { path: "/api/v2/generate/completion",  method: "POST"   as const, service: "llm-gateway",     baseLatency: 800, weight: 15 },
   { path: "/api/v1/auth/verify",          method: "POST"   as const, service: "auth-service",    baseLatency: 15,  weight: 18 },
   { path: "/api/v1/auth/refresh",         method: "POST"   as const, service: "auth-service",    baseLatency: 20,  weight: 6 },
   { path: "/api/v1/products",             method: "GET"    as const, service: "catalog-service", baseLatency: 35,  weight: 14 },
@@ -24,7 +24,7 @@ const ROUTES = [
 // Error messages keyed by failure scenario
 const ERROR_MESSAGES: Record<string, string[]> = {
   database:  ["ECONNREFUSED: Connection refused to pg-cluster-prod:5432", "Connection pool exhausted (100/100 connections active)", "Query timeout after 30000ms on pg-cluster-prod"],
-  openai:    ["OpenAI API: 429 Rate limit exceeded", "OpenAI API: 503 Service temporarily unavailable", "OpenAI API: Timeout after 60000ms"],
+  openai:    ["AI Provider API: 429 Rate limit exceeded", "AI Provider API: 503 Service temporarily unavailable", "AI Provider API: Timeout after 60000ms"],
   traffic:   ["Upstream service overloaded", "Circuit breaker OPEN for downstream service"],
   auth:      ["JWT signature verification failed", "Token expired: refresh required", "Invalid API key"],
 }
@@ -59,8 +59,8 @@ export function generateLog(activeFailures: Set<FailureScenario>): TelemetryLog 
     }
   }
 
-  // ── OpenAI failure ────────────────────────────────────────────────────
-  if (activeFailures.has("openai") && route.service === "openai-proxy") {
+  // ── AI Provider failure ────────────────────────────────────────────────
+  if (activeFailures.has("openai") && route.service === "llm-gateway") {
     if (Math.random() < 0.8) {
       statusCode = Math.random() < 0.5 ? 429 : 503
       latencyMs = 5000 + Math.floor(Math.random() * 55000)

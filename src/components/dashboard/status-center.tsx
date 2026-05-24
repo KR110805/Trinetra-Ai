@@ -30,8 +30,8 @@ export function ServiceMeshStatus() {
       latency: activeFailures.has("database") ? "4200ms" : "120ms",
     },
     {
-      name: "OpenAI Proxy",
-      tag: "openai-proxy",
+      name: "LLM Gateway",
+      tag: "llm-gateway",
       status: activeFailures.has("openai") ? "critical" : "nominal",
       desc: activeFailures.has("openai") ? "Rate limit (429)" : "nominal",
       latency: activeFailures.has("openai") ? "32500ms" : "800ms",

@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------------
 // Trinetra AI – AI Response Parser
-// Safely parses and validates the structured JSON response from OpenAI.
+// Safely parses and validates the structured JSON response from the LLM.
 // ---------------------------------------------------------------------------
 
 import type { AIAnalysisResult } from "./types"
@@ -8,7 +8,7 @@ import type { Severity } from "../types"
 import { safeJsonParse } from "./safe-json-parser"
 
 /**
- * Parse the raw OpenAI response string into a validated AIAnalysisResult.
+ * Parse the raw LLM response string into a validated AIAnalysisResult.
  * Handles malformed JSON gracefully by extracting what we can.
  */
 export function parseAIResponse(

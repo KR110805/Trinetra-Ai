@@ -12,6 +12,11 @@ function nextId(): string {
   return `INC-${++incCounter}`
 }
 
+function isAiService(service: string): boolean {
+  const s = service.toLowerCase()
+  return s.includes("openai") || s.includes("gemini") || s.includes("ai-") || s.includes("llm") || s.includes("inference")
+}
+
 // ---------------------------------------------------------------------------
 // Detection rules
 // ---------------------------------------------------------------------------
@@ -79,11 +84,11 @@ const RULES: DetectionRule[] = [
         severity: avgLat > 3000 ? "critical" : avgLat > 1000 ? "high" : "medium",
         affectedRoute: topRoute,
         service: topService,
-        rootCause: topService === "openai-proxy"
-          ? "OpenAI API response times degraded — upstream provider issue"
+        rootCause: isAiService(topService)
+          ? "AI provider response times degraded — upstream provider issue"
           : `Elevated response times in ${topService} — possible resource contention`,
         confidence: Math.min(96, 65 + Math.floor(avgLat / 100)),
-        recommendedFix: topService === "openai-proxy"
+        recommendedFix: isAiService(topService)
           ? "Enable request queuing with exponential backoff; consider fallback model"
           : `Profile ${topService} for memory/CPU bottlenecks; consider horizontal scaling`,
       }
@@ -139,20 +144,22 @@ const RULES: DetectionRule[] = [
     }),
   },
 
-  // ── OpenAI provider issue ──────────────────────────────────────────
+  // ── AI provider issue ──────────────────────────────────────────
   {
-    name: "openai-degradation",
-    filter: (l) => l.service === "openai-proxy" && l.statusCode >= 400,
+    name: "ai-degradation",
+    filter: (l) => isAiService(l.service) && l.statusCode >= 400,
     detect: (filtered) => filtered.length >= 2,
     buildIncident: (filtered) => {
       const avgLat = Math.round(filtered.reduce((s, l) => s + l.latencyMs, 0) / filtered.length)
+      const topService = filtered[0]?.service ?? "llm-gateway"
+      const providerLabel = topService.toLowerCase().includes("gemini") ? "Gemini" : "AI Provider"
       return {
-        title: "OpenAI API Degradation",
-        description: `${filtered.length} OpenAI API failures detected. Avg response time: ${avgLat}ms.`,
+        title: `${providerLabel} API Degradation`,
+        description: `${filtered.length} ${providerLabel} API failures detected. Avg response time: ${avgLat}ms.`,
         severity: filtered.length > 5 ? "critical" : "high",
-        affectedRoute: "/api/v2/generate/completion",
-        service: "openai-proxy",
-        rootCause: filtered[0]?.error ?? "OpenAI upstream service degradation — rate limiting or outage",
+        affectedRoute: filtered[0]?.path ?? "/api/v2/generate/completion",
+        service: topService,
+        rootCause: filtered[0]?.error ?? `${providerLabel} upstream service degradation — rate limiting or outage`,
         confidence: Math.min(97, 75 + filtered.length * 3),
         recommendedFix: "Activate fallback to secondary model provider; enable response caching for repeated prompts",
       }
@@ -220,7 +227,7 @@ export function progressIncidents(
 
     // Check if the issue is still present
     const relevantErrors = windowLogs.filter(l => {
-      if (incident.service === "openai-proxy") return l.service === "openai-proxy" && l.statusCode >= 400
+      if (isAiService(incident.service)) return isAiService(l.service) && l.statusCode >= 400
       if (incident.title.includes("5xx")) return l.statusCode >= 500
       if (incident.title.includes("Latency")) return l.latencyMs > 500
       if (incident.title.includes("Database")) return l.error?.includes("Connection pool") || l.error?.includes("ECONNREFUSED")

@@ -113,22 +113,42 @@ const HEURISTIC_MAP: Record<string, HeuristicProfile> = {
   },
 
   upstream_provider_degradation: {
-    rootCause: (s) => `OpenAI API upstream degradation detected. ${s.failureCount} failed requests with avg latency ${s.avgLatencyMs}ms (p99: ${s.p99LatencyMs}ms). Error patterns indicate rate limiting (429) and service unavailability (503). This is an external dependency issue — the provider's API is experiencing capacity constraints or is in a degraded state.`,
+    rootCause: (s) => {
+      const topService = s.affectedServices[0] || "llm-gateway";
+      const providerLabel = topService.toLowerCase().includes("gemini") ? "Gemini" : "AI Provider";
+      return `${providerLabel} API upstream degradation detected. ${s.failureCount} failed requests with avg latency ${s.avgLatencyMs}ms (p99: ${s.p99LatencyMs}ms). Error patterns indicate rate limiting (429) and service unavailability (503). This is an external dependency issue — the provider's API is experiencing capacity constraints or is in a degraded state.`;
+    },
     confidence: (s) => Math.min(95, 75 + Math.floor(s.failureCount * 2)),
-    impact: (s) => `AI-powered features (completions, embeddings, analysis) are non-functional. ${s.failureCount} API calls failed in the last ${s.timeWindowSec}s. User-facing AI features will show errors or timeouts.`,
-    fixes: () => [
-      "Enable circuit breaker on openai-proxy with 50% failure threshold and 30s recovery window",
-      "Activate fallback to secondary model provider (Anthropic Claude or self-hosted Llama)",
-      "Implement response caching for repeated/similar prompts with 5min TTL",
-      "Add exponential backoff with jitter: base=1s, max=30s, factor=2",
-    ],
-    recovery: () => [
-      "Check OpenAI status page (status.openai.com) for ongoing incidents",
-      "Switch traffic to fallback model if degradation persists > 5 minutes",
-      "Drain request queue and reject new requests with 503 + retry-after header",
-      "Re-enable primary provider once status.openai.com shows resolution",
-    ],
-    summary: (s) => `OpenAI API degraded — ${s.failureCount} failures, ${s.avgLatencyMs}ms avg latency`,
+    impact: (s) => {
+      const topService = s.affectedServices[0] || "llm-gateway";
+      const providerLabel = topService.toLowerCase().includes("gemini") ? "Gemini" : "AI Provider";
+      return `AI-powered features (${providerLabel} completions, embeddings, analysis) are non-functional. ${s.failureCount} API calls failed in the last ${s.timeWindowSec}s. User-facing AI features will show errors or timeouts.`;
+    },
+    fixes: (s) => {
+      const topService = s.affectedServices[0] || "llm-gateway";
+      return [
+        `Enable circuit breaker on ${topService} with 50% failure threshold and 30s recovery window`,
+        `Activate fallback to secondary model provider (e.g. switching between Gemini, Anthropic, or OpenAI)`,
+        "Implement response caching for repeated/similar prompts with 5min TTL",
+        "Add exponential backoff with jitter: base=1s, max=30s, factor=2",
+      ];
+    },
+    recovery: (s) => {
+      const topService = s.affectedServices[0] || "llm-gateway";
+      const providerLabel = topService.toLowerCase().includes("gemini") ? "Gemini" : "AI Provider";
+      const statusPage = topService.toLowerCase().includes("gemini") ? "Google Cloud Status" : "AI Provider status page";
+      return [
+        `Check ${providerLabel} status page (${statusPage}) for ongoing incidents`,
+        "Switch traffic to fallback model if degradation persists > 5 minutes",
+        "Drain request queue and reject new requests with 503 + retry-after header",
+        `Re-enable primary provider once ${providerLabel} shows resolution`,
+      ];
+    },
+    summary: (s) => {
+      const topService = s.affectedServices[0] || "llm-gateway";
+      const providerLabel = topService.toLowerCase().includes("gemini") ? "Gemini" : "AI Provider";
+      return `${providerLabel} API degraded — ${s.failureCount} failures, ${s.avgLatencyMs}ms avg latency`;
+    },
     eta: () => "External dependency — monitor provider status (typically 10-30 minutes)",
   },
 

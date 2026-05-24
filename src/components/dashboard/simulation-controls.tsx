@@ -7,7 +7,7 @@ import type { FailureScenario } from "@/lib/types"
 
 const scenarios: { id: FailureScenario; label: string; icon: React.ReactNode; description: string }[] = [
   { id: "database", label: "Database Failure",  icon: <Database size={14} />,      description: "Exhaust connection pool on pg-cluster-prod" },
-  { id: "openai",   label: "OpenAI Timeout",    icon: <Bot size={14} />,           description: "Simulate upstream OpenAI rate limiting" },
+  { id: "openai",   label: "AI Timeout",        icon: <Bot size={14} />,           description: "Simulate upstream AI provider timeouts" },
   { id: "traffic",  label: "Traffic Spike",      icon: <Zap size={14} />,           description: "3x traffic surge across all services" },
   { id: "auth",     label: "Auth Failures",      icon: <AlertTriangle size={14} />, description: "JWT verification failures on auth-service" },
 ]
