@@ -1,9 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { Send, Terminal, Cpu, User } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { Send, Sparkles, User } from "lucide-react"
 import { useTelemetry } from "@/lib/telemetry-store"
 
 const suggestedPrompts = [
@@ -35,53 +33,47 @@ export function AskTrinetraPanel({ showChips = true }: { showChips?: boolean }) 
   }
 
   return (
-    <Card className="h-full border border-white/[0.04] bg-[#09090B] shadow-[0_1px_3px_rgba(0,0,0,0.6)] relative flex flex-col overflow-hidden rounded-lg">
+    <div className="h-full relative flex flex-col overflow-hidden w-full bg-transparent">
       
-      <CardHeader className="pb-3 relative z-10 border-b border-white/[0.04] shrink-0">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Terminal className="w-4 h-4 text-zinc-500" />
-            <CardTitle className="text-[11px] font-semibold text-white uppercase tracking-wider font-mono">
-              Ask Trinetra
-            </CardTitle>
-          </div>
-          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded border border-white/[0.06] bg-white/[0.02] text-[8px] font-mono text-zinc-400 uppercase tracking-widest">
-            SRE AGENT ONLINE
-          </div>
-        </div>
-      </CardHeader>
-      
-      <CardContent className="p-4 relative z-10 overflow-y-auto flex-1 space-y-4 custom-scrollbar bg-black/10">
-        {chatMessages.map((msg) => (
-          <div key={msg.id} className={`flex gap-3.5 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
-            <div className={`shrink-0 w-6 h-6 rounded flex items-center justify-center border text-[10px] font-mono font-bold transition-all ${
-              msg.role === "assistant" 
-                ? "bg-white border-transparent text-black shadow-sm" 
-                : "bg-zinc-900 border-white/[0.04] text-zinc-300"
-            }`}>
-              {msg.role === "assistant" ? <Cpu className="w-3 h-3" /> : <User className="w-3 h-3" />}
+      {/* Scrollable Chat Area */}
+      <div className="flex-1 overflow-y-auto px-4 lg:px-8 pb-32 space-y-8 custom-scrollbar">
+        {chatMessages.length === 0 && (
+          <div className="h-full flex flex-col items-center justify-center text-center opacity-50 space-y-4 pt-10">
+            <div className="w-12 h-12 rounded-full border border-white/[0.05] bg-white/[0.02] flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-zinc-400" />
             </div>
-            
-            <div className={`flex flex-col gap-1 max-w-[82%] ${msg.role === "user" ? "items-end" : "items-start"}`}>
-              <div className="flex items-center gap-2 text-[8px] text-zinc-650 font-mono">
-                {msg.role === "assistant" ? "TRINETRA" : "OPERATIONS"}
-                <span>•</span>
-                <span>{msg.timestamp.toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit' })}</span>
+            <p className="text-sm text-zinc-400 font-light">How can I help you resolve telemetry anomalies today?</p>
+          </div>
+        )}
+
+        {chatMessages.map((msg) => (
+          <div key={msg.id} className={`flex gap-4 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"} animate-in fade-in slide-in-from-bottom-2 duration-300`}>
+            {msg.role === "assistant" && (
+              <div className="shrink-0 w-8 h-8 rounded-full border border-white/[0.05] bg-white text-black shadow-sm flex items-center justify-center mt-1">
+                <Sparkles className="w-4 h-4" />
               </div>
+            )}
+            
+            <div className={`flex flex-col gap-1.5 max-w-[85%] lg:max-w-[75%] ${msg.role === "user" ? "items-end" : "items-start"}`}>
+              {msg.role === "assistant" && (
+                <div className="text-[10px] text-zinc-500 font-mono pl-1 uppercase tracking-wider font-semibold">
+                  SRE Autopilot
+                </div>
+              )}
               
-              <div className={`p-3 rounded text-[11px] font-mono leading-relaxed border ${
+              <div className={`px-5 py-3.5 rounded-2xl text-[13px] md:text-sm leading-relaxed ${
                 msg.role === "user"
-                  ? "bg-white/[0.02] border-white/[0.06] text-white rounded-tr-none"
-                  : "bg-black/20 border-white/[0.02] text-zinc-300 rounded-tl-none"
+                  ? "bg-zinc-800 text-white rounded-tr-sm"
+                  : "bg-[#09090B] border border-white/[0.03] text-zinc-300 rounded-tl-sm shadow-sm"
               }`}>
                 {msg.isStreaming ? (
-                  <div className="flex items-center gap-1 h-3.5 px-0.5">
-                    <span className="w-1 h-1 bg-zinc-500 rounded-full animate-bounce"></span>
-                    <span className="w-1 h-1 bg-zinc-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
-                    <span className="w-1 h-1 bg-zinc-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
+                  <div className="flex items-center gap-1.5 h-5 px-1">
+                    <span className="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-bounce"></span>
+                    <span className="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
+                    <span className="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
                   </div>
                 ) : (
-                  <div className="whitespace-pre-wrap">{msg.content}</div>
+                  <div className="whitespace-pre-wrap font-light">{msg.content}</div>
                 )}
               </div>
             </div>
@@ -90,78 +82,82 @@ export function AskTrinetraPanel({ showChips = true }: { showChips?: boolean }) 
 
         {/* Loading Skeletons */}
         {isSending && (
-          <div className="flex gap-3.5 animate-pulse">
-            <div className="shrink-0 w-6 h-6 rounded bg-zinc-900 border border-white/[0.04] flex items-center justify-center text-zinc-600">
-              <Cpu className="w-3 h-3" />
+          <div className="flex gap-4 animate-in fade-in duration-300">
+            <div className="shrink-0 w-8 h-8 rounded-full border border-white/[0.05] bg-zinc-900 text-zinc-600 flex items-center justify-center mt-1">
+              <Sparkles className="w-4 h-4" />
             </div>
-            <div className="flex flex-col gap-1.5 flex-1 max-w-[82%]">
-              <div className="h-2 bg-zinc-950 rounded w-16"></div>
-              <div className="p-3 rounded border border-white/[0.04] bg-zinc-950/40 space-y-1.5 w-64">
-                <div className="h-2 bg-zinc-900 rounded w-full"></div>
-                <div className="h-2 bg-zinc-900 rounded w-5/6"></div>
+            <div className="flex flex-col gap-1.5 max-w-[85%] lg:max-w-[75%] w-full">
+              <div className="text-[10px] text-zinc-600 font-mono pl-1 uppercase tracking-wider font-semibold">
+                SRE Autopilot
+              </div>
+              <div className="px-5 py-4 rounded-2xl bg-[#09090B] border border-white/[0.03] rounded-tl-sm space-y-2 w-64 shadow-sm">
+                <div className="h-2 bg-zinc-800 rounded w-full animate-pulse"></div>
+                <div className="h-2 bg-zinc-800 rounded w-4/5 animate-pulse"></div>
               </div>
             </div>
           </div>
         )}
 
-        <div ref={endOfMessagesRef} />
-      </CardContent>
+        <div ref={endOfMessagesRef} className="h-4" />
+      </div>
 
-      <CardFooter className="p-3.5 pt-0 shrink-0 relative z-10 border-t border-white/[0.04] bg-[#09090B] flex flex-col items-stretch gap-3">
-        {/* Suggested Prompts Chips */}
-        {showChips && (
-          <div className="flex flex-wrap gap-1.5 mt-3">
-            {suggestedPrompts.map((prompt) => (
-              <button
-                key={prompt}
-                disabled={isSending}
-                onClick={() => handleSend(prompt)}
-                className="px-2.5 py-1 text-[8px] font-mono text-zinc-500 hover:text-white bg-black hover:bg-white/[0.02] border border-white/[0.04] hover:border-zinc-800 rounded transition-all cursor-pointer disabled:opacity-30 disabled:pointer-events-none"
-              >
-                {prompt}
-              </button>
-            ))}
-          </div>
-        )}
+      {/* Floating Input Area positioned at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-6 bg-gradient-to-t from-[#050507] via-[#050507] to-transparent pt-12 flex flex-col items-center justify-end z-20 pointer-events-none">
+        <div className="w-full max-w-2xl pointer-events-auto flex flex-col items-center">
+          
+          {/* Suggested Prompts Chips */}
+          {showChips && chatMessages.length < 2 && (
+            <div className="flex flex-wrap justify-center gap-2 mb-4">
+              {suggestedPrompts.slice(0, 3).map((prompt) => (
+                <button
+                  key={prompt}
+                  disabled={isSending}
+                  onClick={() => handleSend(prompt)}
+                  className="px-4 py-2 text-[11px] font-mono text-zinc-400 hover:text-white bg-black/60 backdrop-blur-sm border border-white/[0.05] hover:border-white/[0.1] rounded-full transition-all cursor-pointer shadow-sm disabled:opacity-30"
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
+          )}
 
-        <form 
-          className="w-full relative flex items-center mt-3"
-          onSubmit={(e) => { e.preventDefault(); handleSend(); }}
-        >
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            disabled={isSending}
-            placeholder="Query SRE AI agent..."
-            className="w-full bg-black border border-white/[0.04] focus:border-white/[0.08] rounded pl-3.5 pr-11 py-2 text-[11px] font-mono text-white placeholder:text-zinc-650 outline-none transition-colors"
-          />
-          <Button 
-            type="submit" 
-            size="icon"
-            disabled={!input.trim() || isSending}
-            className="absolute right-1 top-1 bottom-1 h-auto w-8 bg-white hover:bg-zinc-200 text-black border-0 disabled:opacity-20 rounded cursor-pointer transition-all"
+          {/* Floating Input Box */}
+          <form 
+            className="w-full relative flex items-center"
+            onSubmit={(e) => { e.preventDefault(); handleSend(); }}
           >
-            <Send className="w-3 h-3" />
-          </Button>
-        </form>
-      </CardFooter>
+            <div className="absolute left-4 w-5 h-5 flex items-center justify-center">
+              <Sparkles className="w-4 h-4 text-zinc-500" />
+            </div>
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              disabled={isSending}
+              placeholder="Ask Trinetra autopilot..."
+              className="w-full bg-zinc-900/60 backdrop-blur-xl border border-white/[0.06] hover:border-white/[0.1] focus:border-white/[0.15] focus:bg-zinc-900/80 rounded-full pl-12 pr-12 py-3.5 text-sm font-sans font-light text-white placeholder:text-zinc-500 outline-none transition-all shadow-lg"
+            />
+            <button 
+              type="submit"
+              disabled={!input.trim() || isSending}
+              className="absolute right-2 top-1.5 bottom-1.5 w-9 h-9 rounded-full bg-white hover:bg-zinc-200 text-black border-0 disabled:opacity-20 disabled:bg-zinc-800 disabled:text-zinc-500 flex items-center justify-center cursor-pointer transition-all shadow-sm"
+            >
+              <Send className="w-3.5 h-3.5" />
+            </button>
+          </form>
+          
+          <div className="mt-3 text-[9px] text-zinc-500 font-mono tracking-widest uppercase">
+            Autopilot can make mistakes. Verify critical actions.
+          </div>
+        </div>
+      </div>
 
       <style dangerouslySetInnerHTML={{__html: `
         .custom-scrollbar::-webkit-scrollbar {
-          width: 5px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
+          width: 0px;
           background: transparent;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(255, 255, 255, 0.03);
-          border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(255, 255, 255, 0.08);
-        }
       `}} />
-    </Card>
+    </div>
   )
 }
