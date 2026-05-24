@@ -16,6 +16,9 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Trinetra AI - Modern API Observability",
   description: "AI-powered API reliability and incident monitoring platform.",
+  icons: {
+    icon: "/Logo.png",
+  },
 };
 
 export default function RootLayout({

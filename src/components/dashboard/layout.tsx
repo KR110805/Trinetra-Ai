@@ -29,12 +29,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     <div className="flex h-screen w-full bg-[#050507] overflow-hidden text-sm selection:bg-white selection:text-black">
       {/* LEFT SIDEBAR */}
       <aside className="w-56 flex flex-col hidden md:flex border-r border-white/[0.03] bg-[#070709] relative z-20">
-        <div className="h-14 flex items-center px-5 border-b border-white/[0.03]">
-          <div className="flex items-center gap-2.5 text-white font-medium text-xs tracking-tight cursor-pointer" onClick={() => setActiveTab("overview")}>
-            <div className="w-5 h-5 rounded bg-white flex items-center justify-center text-black font-bold text-[9px]">
-              T
+        <div className="h-16 flex items-center px-6 border-b border-white/[0.03]">
+          <div className="flex items-center gap-3 text-white font-medium tracking-tight cursor-pointer" onClick={() => setActiveTab("overview")}>
+            <div className="w-6 h-6 flex items-center justify-center relative rounded overflow-hidden">
+              <img src="/Logo.png" alt="Trinetra Logo" className="w-full h-full object-contain" />
             </div>
-            <span className="font-semibold tracking-tight text-white text-[10px] uppercase tracking-wider font-mono">Trinetra AI</span>
+            <span className="font-semibold tracking-tight text-white text-xs uppercase tracking-wider font-mono">Trinetra AI</span>
           </div>
         </div>
 
@@ -124,8 +124,11 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             </div>
 
             {/* User Avatar */}
-            <div className="w-5.5 h-5.5 rounded bg-zinc-900 border border-white/[0.03] hover:bg-zinc-800 flex items-center justify-center text-zinc-300 hover:text-white text-[8px] font-mono font-medium cursor-pointer transition-colors">
-              KR
+            <div className="flex items-center gap-2 cursor-pointer group">
+              <div className="w-7 h-7 rounded-full border border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.8)] overflow-hidden group-hover:border-white/[0.15] transition-colors relative">
+                <img src="/profile pic.jpeg" alt="KR" className="w-full h-full object-cover" />
+              </div>
+              <span className="text-[10px] font-mono font-medium text-zinc-400 group-hover:text-white transition-colors">KR</span>
             </div>
           </div>
         </header>
@@ -155,14 +158,14 @@ function NavItem({ icon, label, active, badge, onClick, id }: NavItemProps) {
     <button
       id={id}
       onClick={onClick}
-      className={`w-full flex items-center justify-between px-3 py-2 rounded text-[10px] font-mono uppercase tracking-wider transition-all cursor-pointer group ${
+      className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-[11px] font-mono uppercase tracking-wider transition-all cursor-pointer group ${
         active
-          ? "bg-white/[0.02] text-white font-medium border border-white/[0.04] shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
-          : "text-zinc-400 hover:bg-white/[0.005] hover:text-white"
+          ? "bg-white/[0.04] text-white font-semibold border border-white/[0.08] shadow-[0_2px_4px_rgba(0,0,0,0.4)]"
+          : "text-zinc-400 hover:bg-white/[0.02] hover:text-white"
       }`}
     >
-      <div className="flex items-center gap-2.5">
-        <span className={`transition-colors duration-200 ${active ? "text-white" : "text-zinc-650 group-hover:text-zinc-400"}`}>
+      <div className="flex items-center gap-3">
+        <span className={`transition-colors duration-200 flex items-center justify-center ${active ? "text-white" : "text-zinc-500 group-hover:text-zinc-300"} [&>svg]:w-4 [&>svg]:h-4`}>
           {icon}
         </span>
         <span className="tracking-wide text-zinc-300 group-hover:text-white">
