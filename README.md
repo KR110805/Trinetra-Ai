@@ -1,57 +1,49 @@
 👁️ Trinetra AI
 
 The Third Eye for Autonomous Reliability Engineering
-AI-native observability, incident detection, and intelligent recovery workflows for modern applications.
+AI-native observability, intelligent incident detection, and conversational recovery workflows for modern applications.
 
 ⸻
 
 🌌 Overview
 
-Trinetra AI is a modern AI-powered observability and SRE (Site Reliability Engineering) platform built to monitor applications in real time, detect failures autonomously, explain incidents using AI, and guide teams through recovery workflows.
+Trinetra AI is a modern AI-powered observability and SRE (Site Reliability Engineering) platform designed to monitor applications in real time, detect failures autonomously, explain incidents using AI, and guide teams through recovery workflows.
 
-Unlike traditional dashboards that only show metrics, Trinetra actively reasons about telemetry streams and converts operational noise into actionable intelligence.
+Unlike traditional dashboards that only display metrics, Trinetra actively interprets telemetry streams and converts operational noise into actionable intelligence.
 
 Built during the AI Hackathon for Builders 2026 🚀
 
 ⸻
 
-✨ Core Features
+✨ Features
 
 🔌 External Telemetry SDK
 
 Connect any application to Trinetra in minutes.
 
-Applications can stream:
+The SDK can stream:
 
 * API requests
 * latency metrics
-* errors
+* system errors
 * operational events
 
-directly into the observability engine.
-
-Supported Integrations
-
-* AI chat applications
-* SaaS platforms
-* internal tools
-* API services
-* LLM-powered applications
+directly into the Trinetra observability engine.
 
 ⸻
 
 📡 Real-Time Observability
 
-Trinetra continuously monitors:
+Monitor:
 
 * request throughput
-* response latency
-* system health
+* latency
+* error rates
 * service degradation
 * anomaly spikes
 * application failures
 
-All updates occur live inside the dashboard.
+All telemetry updates in real time.
 
 ⸻
 
@@ -61,11 +53,11 @@ Powered by Google Gemini AI.
 
 Trinetra can:
 
-* explain outages
-* identify probable root causes
+* analyze outages
+* explain root causes
 * summarize incidents
-* simplify technical failures
-* provide recovery guidance
+* simplify technical issues
+* recommend recovery actions
 
 ⸻
 
@@ -75,11 +67,11 @@ Detects:
 
 * latency spikes
 * repeated 5xx failures
-* degraded AI provider responses
 * backend instability
+* degraded AI provider responses
 * service health degradation
 
-Incident states:
+Incident lifecycle:
 
 investigating → identified → monitoring → resolved
 
@@ -87,24 +79,24 @@ investigating → identified → monitoring → resolved
 
 💬 Ask Trinetra (AI Copilot)
 
-An AI-native operational assistant that:
+A conversational AI reliability assistant that:
 
-* explains failures
+* explains outages
 * answers telemetry questions
 * simplifies engineering concepts
-* recommends remediation actions
+* recommends remediation steps
 
-Built with a conversational, human-first experience inspired by ChatGPT.
+Inspired by the simplicity and conversational feel of ChatGPT.
 
 ⸻
 
 🛠 Recovery Workflow Engine
 
-Simulated AI remediation workflows:
+Supports AI-guided recovery simulations:
 
 * request queuing
 * retry orchestration
-* fallback provider activation
+* fallback model switching
 * infrastructure stabilization
 * service recovery tracking
 
@@ -112,25 +104,18 @@ Simulated AI remediation workflows:
 
 🌐 Connected Applications
 
-Trinetra tracks applications actively streaming telemetry.
+Track applications actively streaming telemetry into Trinetra.
 
-Example:
+Each connected application includes:
 
-* Nagrik AI
-* AI inference services
-* internal APIs
-* backend gateways
-
-Each application includes:
-
-* health status
-* live latency
-* request volume
-* operational condition
+* live status
+* latency monitoring
+* request metrics
+* operational health
 
 ⸻
 
-🏗 System Architecture
+🏗 Architecture
 
 External Application
         ↓
@@ -168,8 +153,8 @@ AI
 Observability
 
 * Custom telemetry ingestion engine
-* Realtime polling architecture
 * Incident detection engine
+* Realtime telemetry polling
 * AI reasoning pipeline
 
 Deployment
@@ -183,9 +168,9 @@ Deployment
 Trinetra follows a:
 
 * monochrome minimal UI
-* Apple-inspired visual system
 * calm operational interface
 * premium enterprise aesthetic
+* Apple-inspired visual system
 
 Inspired by:
 
@@ -199,13 +184,13 @@ Inspired by:
 
 🔌 SDK Integration
 
-Step 1 — Include SDK
+1. Include SDK
 
 <script src="/js/trinetra.js"></script>
 
 ⸻
 
-Step 2 — Initialize SDK
+2. Initialize SDK
 
 Trinetra.init({
   endpoint: "https://trinetra-ai-ten.vercel.app/api/telemetry",
@@ -214,7 +199,7 @@ Trinetra.init({
 
 ⸻
 
-Step 3 — Track Requests
+3. Track Requests
 
 Trinetra.captureRequest({
   route: "/chat",
@@ -226,13 +211,13 @@ Trinetra.captureRequest({
 
 ⸻
 
-Step 4 — Track Errors
+4. Track Errors
 
 Trinetra.captureError(error)
 
 ⸻
 
-📊 Example Telemetry Packet
+📦 Example Telemetry Packet
 
 {
   "projectName": "Nagrik AI",
@@ -282,9 +267,9 @@ npm run dev
 
 🌍 Live Deployment
 
-Trinetra AI Dashboard
+Trinetra Dashboard
 
-Live Platform￼
+Live Trinetra Platform￼
 
 ⸻
 
@@ -298,7 +283,7 @@ Nagrik AI Demo App￼
 
 1. Healthy System
 
-Dashboard opens in a stable operational state.
+Dashboard starts in a stable operational state.
 
 ⸻
 
@@ -310,13 +295,13 @@ Nagrik AI streams telemetry into Trinetra.
 
 3. Incident Detection
 
-Failures or latency spikes trigger operational incidents.
+Failures or latency spikes trigger incidents automatically.
 
 ⸻
 
 4. AI Reasoning
 
-Gemini analyzes telemetry and explains root causes.
+Gemini analyzes telemetry and explains the root cause.
 
 ⸻
 
@@ -339,11 +324,11 @@ Trinetra includes deterministic fallback systems.
 If:
 
 * Gemini API fails
-* API key missing
-* network unavailable
+* API key is missing
+* network becomes unavailable
 * rate limits occur
 
-the platform automatically switches to heuristic operational reasoning to preserve demo reliability.
+the platform automatically switches to heuristic operational reasoning to preserve stability.
 
 ⸻
 
@@ -354,8 +339,6 @@ Traditional observability tools surface alerts.
 Trinetra goes further.
 
 It interprets telemetry, reasons about failures, explains incidents in human language, and guides operational recovery using AI-native workflows.
-
-The long-term vision:
 
 Build the future operating system for autonomous reliability engineering.
 
