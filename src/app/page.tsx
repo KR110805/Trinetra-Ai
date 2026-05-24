@@ -13,6 +13,7 @@ import { IncidentTimeline } from "@/components/dashboard/incident-timeline"
 import { AskTrinetraPanel } from "@/components/dashboard/ask-trinetra"
 import { SettingsView } from "@/components/dashboard/settings-view"
 import { ConnectedApplications } from "@/components/dashboard/connected-applications"
+import { SdkView } from "@/components/dashboard/sdk-view"
 import { CheckCircle2, Loader2 } from "lucide-react"
 
 function formatTimeAgo(date: Date): string {
@@ -270,6 +271,11 @@ function DashboardPageContent() {
       {/* 6. SETTINGS VIEW */}
       {activeTab === "settings" && (
         <SettingsView />
+      )}
+
+      {/* 7. SDK SHOWCASE VIEW */}
+      {activeTab === "sdk" && (
+        <SdkView />
       )}
 
     </DashboardLayout>

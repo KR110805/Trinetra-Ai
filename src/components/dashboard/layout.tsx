@@ -70,6 +70,13 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             active={activeTab === "monitoring"} 
             onClick={() => setActiveTab("monitoring")} 
           />
+          <NavItem 
+            id="sdk-nav"
+            icon={<TerminalSquare size={13} />} 
+            label="SDK" 
+            active={activeTab === "sdk"} 
+            onClick={() => setActiveTab("sdk")} 
+          />
         </div>
 
         <div className="p-3 border-t border-white/[0.03]">
@@ -140,11 +147,13 @@ interface NavItemProps {
   active?: boolean
   badge?: string
   onClick?: () => void
+  id?: string
 }
 
-function NavItem({ icon, label, active, badge, onClick }: NavItemProps) {
+function NavItem({ icon, label, active, badge, onClick, id }: NavItemProps) {
   return (
     <button
+      id={id}
       onClick={onClick}
       className={`w-full flex items-center justify-between px-3 py-2 rounded text-[10px] font-mono uppercase tracking-wider transition-all cursor-pointer group ${
         active
